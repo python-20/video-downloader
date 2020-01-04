@@ -3,19 +3,27 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
+
 def gui():
     root = tk.Tk()
     root.title = "Youtube Downloader"  # The title of the youtube downloader
 
+    filename = ''  # Default filename, add prom
+
     def run_gui():
-        pass
+        v1 = url_input.get()  # Gets URL
+        v2 = filetype_var.get()  # Gets file type, might remove if we can't find an API which handles it
+        v3 = playlist_var.get()  # Gets 0 if not a playlist, 1 if playlist as an integer
+        v4 = filename  # Gets the path to save your document
+        print(v1, v2, v3, v4)
 
     def reset_inputs():
         pass
 
     def get_filename():
+        nonlocal filename
         filename = askopenfilename()
-        pass
+
     # ~~~~ URL ~~~~~~~~~~~~
     url_label = tk.Label(root, text="Enter the URL of the video:")
     url_label.grid(row=1, column=1)
@@ -23,7 +31,7 @@ def gui():
     url_input = tk.Entry(root)
     url_input.grid(row=1, column=2)
 
-    # ~~~~ Filetype ~~~~~~~
+    # ~~~~ File type ~~~~~~~
     filetype_label = tk.Label(root, text="Enter the file type you want:")
     filetype_label.grid(row=2, column=1)
 
@@ -31,10 +39,11 @@ def gui():
     # Index of list is the default value in the dropdown menu
     filetype_var = tk.StringVar(root)
     filetype_var.set(filetype_input_list[0])
+
     filetype_input = tk.OptionMenu(root, filetype_var, *filetype_input_list)
     filetype_input.grid(row=2, column=2)
 
-    # ~~~~~~ playlist Toggler ~~~~~~~ Not a good idea with tkinter, ignore
+    # X ~~~~~~ Playlist Toggler ~~~~~~~ X Not a good idea with tkinter, ignore
     # playlist_input = tk.Scale(root, label="Playlist?", from_=0, to=1, orient=tk.HORIZONTAL)
     # playlist_input.grid(row=3, column=2)
 
@@ -42,16 +51,16 @@ def gui():
     filetype_label = tk.Label(root, text="Playlist?")
     filetype_label.grid(row=3, column=1)
 
-    playlist_input = tk.Checkbutton(root)
+    playlist_var = tk.IntVar()
+    playlist_input = tk.Checkbutton(root, variable=playlist_var)
     playlist_input.grid(row=3, column=2)
 
     # ~~~~~~~ File ~~~~~~~~~~~~~~~~
     filelocation_label = tk.Label(root, text="Open file location: ")
     filelocation_label.grid(row=4, column=1)
 
-    tk.Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
-    run_button = tk.Button(root, text="FILE", command=lambda: get_filename())
-    run_button.grid(row=4, column=2)
+    filelocation_input = tk.Button(root, text="FILE", command=lambda: get_filename())
+    filelocation_input.grid(row=4, column=2)
 
     # ~~~~~~ Buttons ~~~~~~~~~~~~~~
     run_button = tk.Button(root, text="Run", command=lambda: run_gui())
