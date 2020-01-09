@@ -71,13 +71,17 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* [**Cheryl Murphy / cherylli**](https://github.com/cherylli) - *Project Lead #1*
+* [**Jon M / chonix**](https://github.com/chonix) - *Co-Project Lead #1*
+* [**Jalen Adams / LeftySolara**](https://github.com/LeftySolara) - *Co-Co-Project Lead #1 & Suspected Furry*
+* [**Ryan Samman**](https://github.com/RyanSamman) - *Expert beginner*
+* [**Ballurw**](https://github.com/Ballurw) - *Ballurw*
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
