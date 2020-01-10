@@ -46,7 +46,7 @@
      <string>File type / quality: </string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEditURL">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -56,7 +56,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QToolButton" name="toolButtonQuality">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -82,7 +82,7 @@
      <string>Playlist</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnDownloadLocation">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -95,7 +95,7 @@
      <string>Download Location:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btnDownload">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -108,7 +108,7 @@
      <string>Download</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -121,7 +121,7 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEditDownloadLocation">
     <property name="geometry">
      <rect>
       <x>130</x>
