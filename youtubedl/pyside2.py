@@ -7,7 +7,7 @@ from PySide2.QtCore import QFile
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    ui_file = QFile("qt.ui")
+    ui_file = QFile("ui/qt.ui")
     ui_file.open(QFile.ReadOnly)
 
     loader = QUiLoader()

@@ -1,5 +1,11 @@
 from pytube import YouTube
 
-yt = YouTube('https://www.youtube.com/watch?v=ksW59gYEl6Q')
+# https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
 
-print(yt.title)
+
+class YouTubeVideo:
+    def __init__(self, link):
+        self.yt = YouTube(link)
+
+    def getYoutubeVideoTitle(self):
+        return self.yt.title
