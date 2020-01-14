@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
-    <height>233</height>
+    <width>530</width>
+    <height>382</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="btnDownloadLocation">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>110</y>
+      <x>270</x>
+      <y>140</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -98,8 +98,8 @@
    <widget class="QPushButton" name="btnDownload">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>110</y>
+      <x>280</x>
+      <y>280</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -111,8 +111,8 @@
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>80</y>
+      <x>280</x>
+      <y>310</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -124,8 +124,8 @@
    <widget class="QLineEdit" name="lineEditDownloadLocation">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>110</y>
+      <x>270</x>
+      <y>170</y>
       <width>221</width>
       <height>20</height>
      </rect>
@@ -135,7 +135,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
+      <y>100</y>
       <width>511</width>
       <height>23</height>
      </rect>
@@ -157,13 +157,39 @@
      <string>OK</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelThumbnail">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>231</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelVideoTitle">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>538</width>
+     <width>530</width>
      <height>21</height>
     </rect>
    </property>

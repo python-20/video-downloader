@@ -9,3 +9,8 @@ class YouTubeVideo:
 
     def getYoutubeVideoTitle(self):
         return self.yt.title
+
+    def getVideoThumbnail(self):
+        return f'https://img.youtube.com/vi/{self.yt.video_id}/maxresdefault.jpg'
+
+    # def getVideoQuality(self):
