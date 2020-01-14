@@ -13,4 +13,5 @@ class YouTubeVideo:
     def getVideoThumbnail(self):
         return f'https://img.youtube.com/vi/{self.yt.video_id}/maxresdefault.jpg'
 
-    # def getVideoQuality(self):
+    def getStreamQuality(self):
+        return self.yt.streams.all()

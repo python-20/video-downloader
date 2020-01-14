@@ -1,15 +1,10 @@
-import sys
-import urllib
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
-from core import YouTubeVideo
 
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('ui/qt.ui', self)
+        script_path = (os.path.dirname(os.path.realpath(__file__)))
+        uic.loadUi(f'{script_path}/ui/qt.ui', self)
 
         self.btnOK.clicked.connect(self.enterURL)
         # test URL
@@ -33,6 +28,7 @@ class Ui(QtWidgets.QMainWindow):
         print(f"URL: {link}")
         print(f"Video Title: {yt.getYoutubeVideoTitle()}")
         print(f"Video Thumbnail: {yt.getVideoThumbnail()}")
+        print(f"Video Streams: {yt.getStreamQuality()}")
 
 
 app = QtWidgets.QApplication(sys.argv)
