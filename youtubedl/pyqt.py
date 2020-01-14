@@ -1,4 +1,12 @@
 
+import sys
+import os
+import urllib
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
+from core import YouTubeVideo
+
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
@@ -15,10 +23,11 @@ class Ui(QtWidgets.QMainWindow):
     def enterURL(self):
 
         link = self.lineEditURL.text()
-        yt = YouTubeVideo(link)
-        self.labelVideoTitle.setText(yt.getYoutubeVideoTitle())
+        ytube = YouTubeVideo(link)
+        self.labelVideoTitle.setText(ytube.getYoutubeVideoTitle())
 
-        thumbnail_data = urllib.request.urlopen(yt.getVideoThumbnail()).read()
+        thumbnail_data = urllib.request.urlopen(
+            ytube.getVideoThumbnail()).read()
         pixmap = QPixmap()
         pixmap.loadFromData(thumbnail_data)
         pixmap = pixmap.scaled(
@@ -26,9 +35,9 @@ class Ui(QtWidgets.QMainWindow):
         self.labelThumbnail.setPixmap(pixmap)
 
         print(f"URL: {link}")
-        print(f"Video Title: {yt.getYoutubeVideoTitle()}")
-        print(f"Video Thumbnail: {yt.getVideoThumbnail()}")
-        print(f"Video Streams: {yt.getStreamQuality()}")
+        print(f"Video Title: {ytube.getYoutubeVideoTitle()}")
+        print(f"Video Thumbnail: {ytube.getVideoThumbnail()}")
+        print(f"Video Streams: {ytube.getStreamQuality()}")
 
 
 app = QtWidgets.QApplication(sys.argv)
