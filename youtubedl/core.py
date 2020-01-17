@@ -20,8 +20,9 @@ class YouTubeVideo:
     def getStreamQuality(self):
         return self.yt.streams.all()
 
-    def download(self, location='/downloads', quality=None):
-        # TODO: check if location is valid (if not default)
-        # TODO: create directory if not exist
+    def download(self, location=None, quality=None):
+        # TODO: support manual directory entry
+        if location is None:
+            location = './downloads'
         if quality is None:
-            self.yt.streams.first().download('../downloads')
+            self.yt.streams.first().download(location)

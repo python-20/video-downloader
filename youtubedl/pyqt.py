@@ -3,11 +3,13 @@ import sys
 import os
 import urllib
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from core import YouTubeVideo
 
 ytube = None
+directory = None
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -20,6 +22,7 @@ class Ui(QtWidgets.QMainWindow):
         # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
         self.btnDownload.clicked.connect(self.download)
+        self.btnDownloadLocation.clicked.connect(self.getSaveLocation)
 
         # test URL
         self.lineEditURL.setText("https://www.youtube.com/watch?v=9bZkp7q19f0")
@@ -46,9 +49,15 @@ class Ui(QtWidgets.QMainWindow):
         print(f"Video Thumbnail: {ytube.getVideoThumbnail()}")
         print(f"Video Streams: {ytube.getStreamQuality()}")
 
+    def getSaveLocation(self):
+        global directory
+        directory = str(QFileDialog.getExistingDirectory(
+            self, "Select Directory"))
+        print(directory)
+
     def download(self):
         if ytube is not None:
-            ytube.download()
+            ytube.download(directory)
 
 
 app = QtWidgets.QApplication(sys.argv)
