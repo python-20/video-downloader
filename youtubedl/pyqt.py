@@ -7,14 +7,20 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from core import YouTubeVideo
 
+ytube = None
+
 
 class Ui(QtWidgets.QMainWindow):
+
     def __init__(self):
         super(Ui, self).__init__()
         script_path = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{script_path}/ui/qt.ui', self)
 
+        # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
+        self.btnDownload.clicked.connect(self.download)
+
         # test URL
         self.lineEditURL.setText("https://www.youtube.com/watch?v=9bZkp7q19f0")
 
@@ -23,6 +29,7 @@ class Ui(QtWidgets.QMainWindow):
     def enterURL(self):
 
         link = self.lineEditURL.text()
+        global ytube
         ytube = YouTubeVideo(link)
         self.labelVideoTitle.setText(ytube.getYoutubeVideoTitle())
 
@@ -38,6 +45,10 @@ class Ui(QtWidgets.QMainWindow):
         print(f"Video Title: {ytube.getYoutubeVideoTitle()}")
         print(f"Video Thumbnail: {ytube.getVideoThumbnail()}")
         print(f"Video Streams: {ytube.getStreamQuality()}")
+
+    def download(self):
+        if ytube is not None:
+            ytube.download()
 
 
 app = QtWidgets.QApplication(sys.argv)
