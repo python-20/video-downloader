@@ -47,5 +47,5 @@ class YouTubeVideo:
         # TODO: support manual directory entry
         if location is None:
             location = './downloads'
-            if quality is None:
-                self.yt.streams.first().download(location)
+        if quality is None:
+            self.yt.streams.first().download(location)
