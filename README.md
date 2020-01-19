@@ -25,3 +25,6 @@ https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 [Fix](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
 
 [Issue] (https://github.com/python-20/video-downloader/issues/7)
+
+# To run the program
+youtubedl/pyqt.py
