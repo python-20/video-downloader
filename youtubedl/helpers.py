@@ -7,7 +7,7 @@ class Helpers:
     Class used for auxiliary functions non related to core functionality of the application
     """
 
-    def logging_setup(self, logging_directory, appName):
+    def logging_setup(logging_directory, appName):
         """
         Function to redirect logs to files
         Current enabled logger(s): info (logging.info)
