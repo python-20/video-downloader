@@ -1,23 +1,25 @@
-import logging
 import sys
 import os
 import urllib
-from PyQt5 import QtWidgets, uic, QtGui
+from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from core import YouTubeVideo
+from helpers import Helpers
 
 ytube = None
 directory = None
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO, filename=f'{self.appName}.log', filemode='w')
 
 
 class Ui(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Ui, self).__init__()
+        self.appName = "Video Downloader"
+        self.logger = Helpers.logging_setup("logs/", self.appName)
         script_path = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{script_path}/ui/qt.ui', self)
 
@@ -60,10 +62,9 @@ class Ui(QtWidgets.QMainWindow):
         self.labelThumbnail.setPixmap(pixmap)
 
         # debug information
-        logging.info(f"URL: {link}")
-        logging.info(f"Video Title: {ytube.getYoutubeVideoTitle()}")
-        logging.info(f"Video Thumbnail: {ytube.getVideoThumbnail()}")
-        # logging.info(f"Video Streams: {ytube.getStreamQuality()}")
+        self.logger.info(f"URL: {link}")
+        self.logger.info(f"Video Title: {ytube.getYoutubeVideoTitle()}")
+        self.logger.info(f"Video Thumbnail: {ytube.getVideoThumbnail()}")
 
     def getSaveLocation(self):
         """ Get user selected directory when the get location button is clicked.
@@ -72,7 +73,7 @@ class Ui(QtWidgets.QMainWindow):
         directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
         self.lineEditDownloadLocation.setText(directory)
-        logging.info(f"function: getSaveLocation - directory: {directory}")
+        self.logger.info(f"function: getSaveLocation - directory: {directory}")
 
     def onSaveLocationChange(self):
         """ Get save location by user text input
@@ -85,7 +86,7 @@ class Ui(QtWidgets.QMainWindow):
             self.showPopUp("Directory is not valid. Please re select")
         else:
             directory = entered_directory
-        logging.info(
+        self.logger.info(
             f"function: onSaveLocationChange - directory: {directory}")
 
     def download(self):
@@ -102,7 +103,7 @@ class Ui(QtWidgets.QMainWindow):
 
         """
         msg = QMessageBox()
-        msg.setWindowTitle("Video Downloader")
+        msg.setWindowTitle(self.appName)
         msg.setText(message)
         x = msg.exec_()
 
