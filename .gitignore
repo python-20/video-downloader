@@ -129,6 +129,9 @@ dmypy.json
 .pyre/
 .vscode/settings.json
 
+# IDE related
+.idea/
+
 # Default Download Directory
 downloads/
 
