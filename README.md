@@ -25,3 +25,42 @@ https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 [Fix](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
 
 [Issue] (https://github.com/python-20/video-downloader/issues/7)
+
+# Setting up Virtual Environment
+## Install the virtualenv package
+```
+pip install virtualenv
+```
+## Create the virtual environment
+```
+virtualenv env
+```
+where env is the name/directory of the virtual environemnt
+
+## Activate the virtual environment
+
+- Mac OS / Linux
+
+```
+source env/bin/activate
+```
+
+- Windows
+```
+env\Scripts\activate
+```
+
+## Deactivate the virtual environment
+```
+deactivate
+```
+
+## Installing project dependencies
+```
+pip install requirements.txt
+```
+
+## Add project depenencies
+```
+pip freeze > requirements.txt.
+```
