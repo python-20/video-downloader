@@ -11,8 +11,8 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
+   <string>Video Downloader</string>
+  </property>  
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="labelURL">
     <property name="geometry">

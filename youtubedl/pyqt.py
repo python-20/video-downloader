@@ -2,7 +2,7 @@ import logging
 import sys
 import os
 import urllib
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtGui
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
@@ -20,6 +20,10 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         script_path = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{script_path}/ui/qt.ui', self)
+
+        # set window icon
+        self.setWindowIcon(QtGui.QIcon(
+            f'{script_path}/ui/img/title-bar-icon.png'))
 
         # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
