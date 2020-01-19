@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>382</height>
+    <width>535</width>
+    <height>383</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
+   <string>Video Downloader</string>
+  </property>  
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="labelURL">
     <property name="geometry">
@@ -69,39 +69,30 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Playlist</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnDownloadLocation">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>140</y>
-      <width>111</width>
-      <height>23</height>
+      <x>470</x>
+      <y>100</y>
+      <width>28</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Download Location:</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>img/folder.png</normaloff>img/folder.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnDownload">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>280</y>
+      <x>420</x>
+      <y>160</y>
       <width>75</width>
-      <height>23</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -111,10 +102,10 @@
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>310</y>
+      <x>420</x>
+      <y>190</y>
       <width>75</width>
-      <height>23</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -124,9 +115,9 @@
    <widget class="QLineEdit" name="lineEditDownloadLocation">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>170</y>
-      <width>221</width>
+      <x>10</x>
+      <y>100</y>
+      <width>451</width>
       <height>20</height>
      </rect>
     </property>
@@ -135,7 +126,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>100</y>
+      <y>310</y>
       <width>511</width>
       <height>23</height>
      </rect>
@@ -163,24 +154,37 @@
       <x>20</x>
       <y>170</y>
       <width>231</width>
-      <height>141</height>
+      <height>121</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>&lt;Thumbnail&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelVideoTitle">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>140</y>
+      <x>20</x>
+      <y>130</y>
       <width>211</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>&lt;Video Title&gt; </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Download Loation:</string>
     </property>
    </widget>
   </widget>
@@ -189,7 +193,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>530</width>
+     <width>535</width>
      <height>21</height>
     </rect>
    </property>
