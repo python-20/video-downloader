@@ -26,6 +26,7 @@ https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 
 [Issue] (https://github.com/python-20/video-downloader/issues/7)
 
+
 # Setting up Virtual Environment
 ## Install the virtualenv package
 ```
@@ -64,3 +65,7 @@ pip install requirements.txt
 ```
 pip freeze > requirements.txt.
 ```
+
+# To run the program
+youtubedl/pyqt.py
+
