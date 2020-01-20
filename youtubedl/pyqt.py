@@ -11,8 +11,6 @@ from helpers import Helpers
 ytube = None
 directory = None
 
-# logging.basicConfig(level=logging.INFO, filename=f'{self.appName}.log', filemode='w')
-
 
 class Ui(QtWidgets.QMainWindow):
 
@@ -20,12 +18,12 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         self.appName = "Video Downloader"
         self.logger = Helpers.logging_setup("logs/", self.appName)
-        script_path = (os.path.dirname(os.path.realpath(__file__)))
-        uic.loadUi(f'{script_path}/ui/qt.ui', self)
+        appPath = (os.path.dirname(os.path.realpath(__file__)))
+        uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
         # set window icon
         self.setWindowIcon(QtGui.QIcon(
-            f'{script_path}/ui/img/title-bar-icon.png'))
+            f'{appPath}/ui/img/title-bar-icon.png'))
 
         # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
