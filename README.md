@@ -64,7 +64,7 @@ pip install requirements.txt
 
 ### Add project depenencies
 ```
-pip freeze > requirements.txt.
+pip freeze > requirements.txt
 ```
 
 # Useful guides:
