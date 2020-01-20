@@ -1,4 +1,5 @@
 # youtube-video-downloader
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
 
 
 ## What does this application do?
@@ -18,16 +19,14 @@ social networks
 - Python 3.7.x
 
 ## Contributors
-- cherylli  
+- [Cheryl M](github.com/cherylli)  
 - chonix
 - RyanSamman
 
 ## Dependencies
-PyQt5==5.14.1
-
-PyQt5-sip==12.7.0
-
-pytube==9.5.3
+- PyQt5==5.14.1
+- PyQt5-sip==12.7.0
+- pytube==9.5.3
 
 ## Dev environment setup:
 ### Setting up Virtual Environment
@@ -44,7 +43,6 @@ where <i>env</i> is the name/directory of the virtual environemnt
 ### Activate the virtual environment
 
 - Mac OS / Linux
-
 ```
 source env/bin/activate
 ```
@@ -75,13 +73,13 @@ pip freeze > requirements.txt.
 https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 
 ### Useful stuff for PyQt5
-- https://data-flair.training/blogs/python-pyqt5-tutorial/
+- [https://data-flair.training/blogs/python-pyqt5-tutorial/](https://data-flair.training/blogs/python-pyqt5-tutorial/)
 
 - [Python GUI Development With PyQt5 Introduction & Creating Window #1](https://youtu.be/yD0iu3n-e_s?list=PL1FgJUcJJ03uO70zDLDF3oaTu6s2QLOPa)
 
 - [PyQt5 Tutorial](https://www.youtube.com/watch?v=_bi0SqW_4L0&list=PLS1QulWo1RIZTkXbVkjr5Z3m-uMs05u7V)
 
-- https://nitratine.net/blog/post/how-to-import-a-pyqt5-ui-file-in-a-python-gui/
+- [https://nitratine.net/blog/post/how-to-import-a-pyqt5-ui-file-in-a-python-gui/](https://nitratine.net/blog/post/how-to-import-a-pyqt5-ui-file-in-a-python-gui/)
 
 ## Getting started with PyTube
 
