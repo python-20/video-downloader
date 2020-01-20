@@ -1,27 +1,24 @@
-# youtube-video-downloader
-[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
-
+# Video Downloader [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
+We use Python, along with [PyTube](https://github.com/nficano/pytube) and [PyQT5](https://pypi.org/project/PyQt5/) to make a simple and intuitive GUI for downloading Videos & Playlists from YouTube.
 
 ## What does this application do?
-youtube-video-downloader 's purpose is to aid the end-user to download a youtube video.
+Our Video Downloader's purpose is to aid the end-user to download Youtube Videos.
 In the near future, the application will be extended to download playlists and other media formats from different 
-social networks
+social networks, such as Reddit, Imgur, GifyCat, and more!
 
-## Current Bug and fix
+## IMPORTANT ! PyTube Bug & Fix
 ### (KeyError: 'url_encoded_fmt_stream_map')
 
-[Fix](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
-
-[Issue] (https://github.com/python-20/video-downloader/issues/7)
+There is currently [a major bug in PyTube](https://github.com/python-20/video-downloader/issues/7), the API we use to download YouTube videos, but thankfully an [unofficial patch has been released.](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
 
 
 ## Prerequisites
-- Python 3.7.x
+- [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
 
 ## Contributors
-- [Cheryl M](github.com/cherylli)  
-- chonix
-- RyanSamman
+* [**Cheryl M / cherylli**](https://github.com/cherylli) - *Project Lead #1*
+* [**Jon M / chonix**](https://github.com/chonix) - *Co-Project Lead #1*
+* [**Ryan Samman**](https://github.com/RyanSamman) - *Expert beginner*
 
 ## Dependencies
 - PyQt5==5.14.1
