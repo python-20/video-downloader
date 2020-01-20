@@ -4,16 +4,16 @@ We use Python, along with [PyTube](https://github.com/nficano/pytube) and [PyQT5
 ## What does this application do?
 Our Video Downloader's purpose is to aid the end-user to download Youtube Videos.
 In the near future, the application will be extended to download playlists and other media formats from different 
-social networks, such as Reddit, Imgur, GifyCat, and more!
+social networks, such as Reddit, Imgur, GifyCat, and more.
 
 ## IMPORTANT ! PyTube Bug & Fix
 ### (KeyError: 'url_encoded_fmt_stream_map')
 
-There is currently [a major bug in PyTube](https://github.com/python-20/video-downloader/issues/7), the API we use to download YouTube videos, but thankfully an [unofficial patch has been released.](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
+There is currently [a major bug in PyTube](https://github.com/python-20/video-downloader/issues/7), the API we use to download YouTube videos, but an [unofficial patch has been released.](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
 
 
 ## Prerequisites
-- [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
+- [[Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
 
 ## Contributors
 * [**Cheryl M / cherylli**](https://github.com/cherylli) - *Project Lead #1*
