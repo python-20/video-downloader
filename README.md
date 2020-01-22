@@ -1,19 +1,22 @@
 # Video Downloader [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
-We use Python, along with [PyTube](https://github.com/nficano/pytube) and [PyQT5](https://pypi.org/project/PyQt5/) to make a simple and intuitive GUI for downloading Videos & Playlists from YouTube.
+
+Video downloader is a desktop application made with Python. The GUI is built using [PyQT5](https://pypi.org/project/PyQt5/). It allows downloading of Youtube Videos and Playlists to the user's system.
 
 ## What does this application do?
 Our Video Downloader's purpose is to aid the end-user to download Youtube Videos.
 In the near future, the application will be extended to download playlists and other media formats from different 
-social networks, such as Reddit, Imgur, GifyCat, and more!
+social networks, such as Reddit, Imgur, GifyCat, and more.
 
 ## IMPORTANT ! PyTube Bug & Fix
 ### (KeyError: 'url_encoded_fmt_stream_map')
 
-There is currently [a major bug in PyTube](https://github.com/python-20/video-downloader/issues/7), the API we use to download YouTube videos, but thankfully an [unofficial patch has been released.](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
+This is a known bug in PyTube <br>
+**Temporary Fix**:
+- Editing Local pytube files as per this [pull request](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
 
 
 ## Prerequisites
-- [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
+- [Python 3.7x](https://www.python.org/downloads/release/python-376/)
 
 ## Contributors
 * [**Cheryl M / cherylli**](https://github.com/cherylli) - *Project Lead #1*
@@ -21,9 +24,9 @@ There is currently [a major bug in PyTube](https://github.com/python-20/video-do
 * [**Ryan Samman**](https://github.com/RyanSamman) - *Expert beginner*
 
 ## Dependencies
-- PyQt5==5.14.1
-- PyQt5-sip==12.7.0
-- pytube==9.5.3
+- **PyQt5==5.14.1**
+- **PyQt5-sip==12.7.0** `extension module provides support for the PyQt5 package`
+- [**pytube==9.5.3**](https://github.com/nficano/pytube) `A lightweight, Pythonic, dependency-free, library for downloading YouTube Videos`
 
 ## Dev environment setup:
 ### Setting up Virtual Environment
