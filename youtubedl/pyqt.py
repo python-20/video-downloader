@@ -68,8 +68,7 @@ class Ui(QtWidgets.QMainWindow):
         """ Get user selected directory when the get location button is clicked.
         """
         global directory
-        directory = str(QFileDialog.getExistingDirectory(
-            self, "Select Directory"))
+        directory = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
         self.lineEditDownloadLocation.setText(directory)
         self.logger.info(f"function: getSaveLocation - directory: {directory}")
 

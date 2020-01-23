@@ -67,12 +67,20 @@ pip install requirements.txt
 pip freeze > requirements.txt
 ```
 
+```
+For Mac user after downloading pytube package run:
+pip install certifi , to avoid ImportError: No module named certifi
+
+```
+
 # Useful guides:
 ## Getting started with PyQt5
 ### How to use qt designer
 https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 
 ### Useful stuff for PyQt5
+- [https://www.blog.pythonlibrary.org/2018/05/30/loading-ui-files-in-qt-for-python/](https://www.blog.pythonlibrary.org/2018/05/30/loading-ui-files-in-qt-for-python/)
+
 - [https://data-flair.training/blogs/python-pyqt5-tutorial/](https://data-flair.training/blogs/python-pyqt5-tutorial/)
 
 - [Python GUI Development With PyQt5 Introduction & Creating Window #1](https://youtu.be/yD0iu3n-e_s?list=PL1FgJUcJJ03uO70zDLDF3oaTu6s2QLOPa)
