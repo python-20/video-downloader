@@ -59,7 +59,7 @@ deactivate
 
 ### Installing project dependencies
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Add project depenencies
