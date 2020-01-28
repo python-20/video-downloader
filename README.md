@@ -2,18 +2,27 @@
 
 Video downloader is a desktop application made with Python. The GUI is built using [PyQT5](https://pypi.org/project/PyQt5/). It allows downloading of Youtube Videos and Playlists to the user's system.
 
-## What does this application do?
-Our Video Downloader's purpose is to aid the end-user to download Youtube Videos.
-In the near future, the application will be extended to download playlists and other media formats from different 
-social networks, such as Reddit, Imgur, GifyCat, and more.
+## Future Plans
+- [ ] download playlists
+- [ ] download from from different 
+media sources, such as Reddit, Imgur, GifyCat, and more.
 
-## IMPORTANT ! PyTube Bug & Fix
-### (KeyError: 'url_encoded_fmt_stream_map')
+## IMPORTANT ! 
+As the original pytube is not being maintained we have made the decision to switch to [pytube3](https://github.com/hbmartin/pytube3)
 
-This is a known bug in PyTube <br>
-**Temporary Fix**:
-- Editing Local pytube files as per this [pull request](https://github.com/nficano/pytube/pull/537/files/bceb929e143caadd874955fa422f8a58955bafaf)
+If you're already using the original pytube, please upgrade using.  
 
+```
+pip install pytube3 --upgrade
+```
+
+or  
+
+```
+pip uninstall pytube
+pip install pytube3
+```
+*_If its a new installation of the project, please ignore this session_*
 
 ## Prerequisites
 - [Python 3.7x](https://www.python.org/downloads/release/python-376/)
@@ -26,7 +35,7 @@ This is a known bug in PyTube <br>
 ## Dependencies
 - **PyQt5==5.14.1**
 - **PyQt5-sip==12.7.0** `extension module provides support for the PyQt5 package`
-- [**pytube==9.5.3**](https://github.com/nficano/pytube) `A lightweight, Pythonic, dependency-free, library for downloading YouTube Videos`
+- [**pytube3**](https://github.com/hbmartin/pytube3) `A lightweight, Pythonic, dependency-free, library for downloading YouTube Videos` - hbmartin forked version
 
 ## Dev environment setup:
 ### Setting up Virtual Environment
@@ -85,7 +94,6 @@ https://www.youtube.com/watch?v=FVpho_UiDAY&t=398s
 
 [Pytube Quickstart](https://python-pytube.readthedocs.io/en/latest/user/quickstart.html)
 
-[Pytube github repository](https://github.com/nficano/pytube)
 
 ## License
 GNU General Public License v3.0 - 

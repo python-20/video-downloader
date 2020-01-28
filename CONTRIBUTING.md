@@ -13,8 +13,8 @@ type/description
 types: features, bugfix, documentation, etc
 
 ### examples: 
-- features/playlist
-- bugfix/indentation
+- features/*which_feature*
+- bugfix/*whatareyoufixing*
 
 ## Pull Requests and Merging
 
