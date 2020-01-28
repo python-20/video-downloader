@@ -35,7 +35,7 @@ pip install pytube3
 ## Dependencies
 - **PyQt5==5.14.1**
 - **PyQt5-sip==12.7.0** `extension module provides support for the PyQt5 package`
-- [**pytube3**](https://github.com/hbmartin/pytube3) `A lightweight, Pythonic, dependency-free, library for downloading YouTube Videos` - hbmartin forked version
+- [**pytube3**](https://github.com/hbmartin/pytube3) `A lightweight, Pythonic, dependency-free, library for downloading YouTube Videos` - hbmartin forked version from [original pytube](https://github.com/nficano/pytube/tree/master/pytube)
 
 ## Dev environment setup:
 ### Setting up Virtual Environment
