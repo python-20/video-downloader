@@ -32,6 +32,8 @@ pip install pytube3
 * [**Jon M / chonix**](https://github.com/chonix) - *Co-Project Lead #1*
 * [**Ryan Samman**](https://github.com/RyanSamman) - *Expert beginner*
 
+Please feel free to contact us if you would like to contribute. We also have a discord server for various projects including this.
+
 ## Dependencies
 - **PyQt5==5.14.1**
 - **PyQt5-sip==12.7.0** `extension module provides support for the PyQt5 package`
