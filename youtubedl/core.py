@@ -5,7 +5,7 @@ from pytube import YouTube
 
 class YouTubeVideo:
     def __init__(self, link):
-        self.yt = YouTube(link)
+        self.yt = YouTube(link, on_progress_callback=self.download_progress)
 
     # fetch new link
 
@@ -49,3 +49,8 @@ class YouTubeVideo:
             location = './downloads'
         if quality is None:
             self.yt.streams.first().download(location)
+
+    def download_progress(self, stream, chunk, file_handle, bytes_remaining):
+        # print("on process callback")
+        file_size = stream.filesize
+        print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
