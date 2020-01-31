@@ -3,29 +3,17 @@ from pytube import YouTube
 # https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
 
 
+def getVideoThumbnail(video_id):
+    """ Get the video thumbnail
+
+    Returns:
+    URL of the thumbnail of the video
+
+    """
+    return f'https://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
+
+
 class YouTubeVideo:
-    def __init__(self, link):
-        self.yt = YouTube(link, on_progress_callback=self.download_progress)
-
-    # fetch new link
-
-    def getYoutubeVideoTitle(self):
-        """ Get the video title
-
-        Returns:
-        Title of the video
-
-        """
-        return self.yt.title
-
-    def getVideoThumbnail(self):
-        """ Get the video thumbnail
-
-        Returns:
-        URL of the thumbnail of the video
-
-        """
-        return f'https://img.youtube.com/vi/{self.yt.video_id}/maxresdefault.jpg'
 
     def getStreamQuality(self):
         """ Get the available stream qualties of the video
@@ -53,4 +41,5 @@ class YouTubeVideo:
     def download_progress(self, stream, chunk, file_handle, bytes_remaining):
         # print("on process callback")
         file_size = stream.filesize
-        print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
+        # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
+        self.progress = round((1 - bytes_remaining / file_size) * 100, 3)
