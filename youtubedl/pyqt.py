@@ -146,6 +146,10 @@ class Ui(QtWidgets.QMainWindow):
         if quality is None:
             ytube.streams.first().download(location)
 
+        self.showPopUp(
+            f"{ytube.title} - has been downloaded successfully to \
+            {os.path.abspath(location)}")
+
 
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
