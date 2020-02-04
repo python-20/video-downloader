@@ -16,9 +16,25 @@ types: features, bugfix, documentation, etc
 - features/*which_feature*
 - bugfix/*whatareyoufixing*
 
+## Commenting your code
+
+[Follow this issue on commenting your code](https://github.com/python-20/video-downloader/issues/16#issue-550940408)
+
+It is very important for you to comment your code well to ensure others can understand your code and it's use. 
+When possible, [add docstrings](https://www.pythonforbeginners.com/basics/python-docstrings/) to your functions and classes
+
 ## Pull Requests and Merging
 
-feature branches will be merged into the default branch /trunk (master). 2 Approvals is required for any merging. Reviewers please pull and run the code and make sure it is working before approving.
+Feature branches will be merged into the default branch /trunk (master). 2 Approvals is required for any merging. Reviewers please pull and run the code and make sure it is working before approving.
+
+[Ensure that your commits & Pull Requests have meaningful messages and descriptions](https://chris.beams.io/posts/git-commit/), like:
+```
+Short description
+
+Detailed description mentioning the additions and features you have made 
+
+If any issues are solved via your commit/PR, add it in the description as well.
+```
 
 ### Workflow
 <ol>
