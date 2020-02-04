@@ -100,9 +100,21 @@ class Ui(QtWidgets.QMainWindow):
         """
         global ytube
         global directory
-
+        print()
+        checkboxState = self.checkboxAudio.isChecked()
         if ytube is not None:
-            self.download(directory)
+            # Checks if checkboxAudio is checked or not,
+            # ([ ] -> False, [X] -> True)
+            if checkboxState:
+                # TODO Add a parameter to the function "download"
+                # To support filtering of streams (progressive audio etc)
+                self.logger.info(
+                    f"function: download_button - checkbox \"checkboxAudio\" isChecked: {checkboxState}")
+                self.download(directory, stream="audio")
+            else:
+                self.download(directory)
+        if ytube is None:
+            self.showPopUp("Enter a URL and press OK")
 
     def showPopUp(self, message):
         """ Show pop up message
@@ -126,7 +138,7 @@ class Ui(QtWidgets.QMainWindow):
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
-    def download(self, location=None, quality=None):
+    def download(self, location=None, quality=None, stream="all"):
         """ Download the video. Default save location is './downloads'
 
         Args:
