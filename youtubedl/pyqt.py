@@ -147,7 +147,8 @@ class Ui(QtWidgets.QMainWindow):
             ytube.streams.first().download(location)
 
         self.showPopUp(
-            f"{ytube.title} - has been downloaded successfully to {os.path.abspath(location)}")
+            f"{ytube.title} - has been downloaded successfully to:\
+            \n{os.path.abspath(location)}")
 
 
 app = QtWidgets.QApplication(sys.argv)
