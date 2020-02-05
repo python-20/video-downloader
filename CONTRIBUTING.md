@@ -4,7 +4,7 @@ Trunk Based Development is used in this project. For a detail explanation please
 - [Trunk Based Development](https://trunkbaseddevelopment.com/)
 - [Adopt a Git branching strategy](https://docs.microsoft.com/en-us/azure/devops/repos/git/git-branching-guidance?view=azure-devops)
 
-## Naming conventions
+## Branch naming conventions
 
 ```
 type/description
@@ -18,10 +18,26 @@ types: features, bugfix, documentation, etc
 
 ## Commenting your code
 
-[Follow this issue on commenting your code](https://github.com/python-20/video-downloader/issues/16#issue-550940408)
+Comments should be included when necessary, including docstrings for functions and classes. 
 
-It is very important for you to comment your code well to ensure others can understand your code and it's use. 
-When possible, [add docstrings](https://www.pythonforbeginners.com/basics/python-docstrings/) to your functions and classes
+- [Writing Comments in Python](https://realpython.com/python-comments-guide/)
+- [Python Docstrings](https://www.pythonforbeginners.com/basics/python-docstrings/) 
+
+## Styling
+[PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/) 
+
+## Git commit messages
+
+Use imperative mood. Describe what was done. 
+Example 
+```
+Fixed the fencepost error //bad
+Fixing the fencepost error //bad
+Fix the fencepost error //good
+```
+
+- [How to write a Git commit message properly with examples](https://www.theserverside.com/video/Follow-these-git-commit-message-guidelines)
+- [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
 
 ## Pull Requests and Merging
 
