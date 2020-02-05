@@ -16,29 +16,6 @@ types: features, bugfix, documentation, etc
 - features/*which_feature*
 - bugfix/*whatareyoufixing*
 
-## Commenting your code
-
-Comments should be included when necessary, including docstrings for functions and classes. 
-
-- [Writing Comments in Python](https://realpython.com/python-comments-guide/)
-- [Python Docstrings](https://www.pythonforbeginners.com/basics/python-docstrings/) 
-
-## Styling
-[PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/) 
-
-## Git commit messages
-
-Use imperative mood. Describe what was done. 
-Example 
-```
-Fixed the fencepost error //bad
-Fixing the fencepost error //bad
-Fix the fencepost error //good
-```
-
-- [How to write a Git commit message properly with examples](https://www.theserverside.com/video/Follow-these-git-commit-message-guidelines)
-- [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
-
 ## Pull Requests and Merging
 
 Feature branches will be merged into the default branch /trunk (master). 2 Approvals is required for any merging. Reviewers please pull and run the code and make sure it is working before approving.
@@ -60,6 +37,30 @@ If any issues are solved via your commit/PR, add it in the description as well.
 <li>Wait for Approval</li>
 </ol>
 If you're working on a bugfix or a new feature you can assign yourself to the related issue(s) so other people know you're working on it.
+
+# Commenting your code
+
+Comments should be included when necessary, including docstrings for functions and classes. 
+
+- [Writing Comments in Python](https://realpython.com/python-comments-guide/)
+- [Python Docstrings](https://www.pythonforbeginners.com/basics/python-docstrings/) 
+
+# Styling
+[PEP 8 -- Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/) 
+
+# Git commit messages
+
+Use imperative mood. Describe what was done. 
+Example 
+```
+Fixed the fencepost error //bad
+Fixing the fencepost error //bad
+Fix the fencepost error //good
+```
+
+- [How to write a Git commit message properly with examples](https://www.theserverside.com/video/Follow-these-git-commit-message-guidelines)
+- [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
+
 
 # Bugs
 If you find a bug please submit a ticket in the issues section.
