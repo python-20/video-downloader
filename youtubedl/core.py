@@ -1,21 +1,55 @@
+import pytube
+
 from pytube import YouTube
 
-# https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
+# https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
 
-def getVideoThumbnail(video_id):
-    """ Get the video thumbnail
+class Video:
 
-    Returns:
-    URL of the thumbnail of the video
+    @property
+    def videoId(self):
+        pass
 
-    """
-    return f'https://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
+    @property
+    def videoTitle(self):
+        pass
+
+    @property
+    def videoThumbnail(self):
+        pass
+
+    @property
+    def videoStreamQuality(self):
+        pass
+
+    def download(self, defaultQuality=None):
+        pass
+
+    def download_progress(self):
+        pass
 
 
-class YouTubeVideo:
+class YouTubeVideo(Video):
 
-    def getStreamQuality(self):
+    def __init__(self, url):
+        self.url = url
+        self.yt = YouTube(self.url)
+
+    @property
+    def videoId(self):
+        return pytube.extract.video_id(self.url)
+
+    @property
+    def videoTitle(self):
+        return self.yt.title
+
+    @property
+    def videoThumbnail(self):
+        return self.yt.thumbnail_url
+
+    @property
+    def videoStreamQuality(self):
         """ Get the available stream qualties of the video
 
         Returns:
@@ -24,7 +58,7 @@ class YouTubeVideo:
         """
         return self.yt.streams.all()
 
-    def download(self, location=None, quality=None):
+    def download(self, folder='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'
 
         Args:
@@ -33,10 +67,8 @@ class YouTubeVideo:
 
         """
         # TODO: support manual directory entry
-        if location is None:
-            location = './downloads'
         if quality is None:
-            self.yt.streams.first().download(location)
+            self.yt.streams.first().download(folder)
 
     def download_progress(self, stream, chunk, file_handle, bytes_remaining):
         # print("on process callback")
