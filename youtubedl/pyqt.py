@@ -55,7 +55,7 @@ class Ui(QtWidgets.QMainWindow):
         """
 
         link = self.lineEditURL.text()
-        self.ytube = YouTubeVideo(link) #, on_progress_callback=self.download_progress)
+        self.ytube = YouTubeVideo(link, progress_callback=self.download_progress)
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)
@@ -113,11 +113,11 @@ class Ui(QtWidgets.QMainWindow):
         msg.setText(message)
         x = msg.exec_()
 
-    def download_progress(self, stream, chunk, file_handle, bytes_remaining):
+    def download_progress(self, stream=None, chunk=None, file_handle=None, bytes_remaining=None):
         """
         Updates progress bar on download_progress callback
         """
-        # print("on process callback")
+        print("on process callback")
         file_size = stream.filesize
         # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
         self.progressBar.setValue(
