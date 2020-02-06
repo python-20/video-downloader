@@ -13,7 +13,6 @@ from core import YouTubeVideo
 from helpers import Helpers
 
 
-# ytube = None
 DEFAULT_DIRECTORY = './downloads'
 
 
@@ -51,7 +50,6 @@ class Ui(QtWidgets.QMainWindow):
     def enterURL(self):
         """ When OK button is pressed.
         Use the given URL to retrieve video information and process it
-
         """
 
         link = self.lineEditURL.text()
@@ -97,7 +95,6 @@ class Ui(QtWidgets.QMainWindow):
     def download_button(self):
         """ When download button is pressed
         """
-
         if self.ytube is not None:
             self.download(location=self.user_directory)
 
@@ -119,7 +116,6 @@ class Ui(QtWidgets.QMainWindow):
         """
         print("on process callback")
         file_size = stream.filesize
-        # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
@@ -132,8 +128,6 @@ class Ui(QtWidgets.QMainWindow):
 
         """
         # TODO: support manual directory entry
-
-        # global ytube
 
         print(f"location: {location}")
         print(f"quality: {quality}")

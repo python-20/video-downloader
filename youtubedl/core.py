@@ -26,9 +26,6 @@ class Video:
     def download(self, defaultQuality=None):
         pass
 
-    # def download_progress(self):
-    #     pass
-
 
 class YouTubeVideo(Video):
 
@@ -36,7 +33,6 @@ class YouTubeVideo(Video):
         self.url = url
         self.progress_callback = progress_callback
         self.yt = YouTube(self.url, on_progress_callback=self.progress_callback)
-        # self.filesize = self.yt.filesize
 
     @property
     def videoId(self):
@@ -71,9 +67,3 @@ class YouTubeVideo(Video):
         # TODO: support manual directory entry
         if quality is None:
             self.yt.streams.first().download(folder)
-
-    # def download_progress(self, stream, chunk, file_handle, bytes_remaining):
-    #     # print("on process callback")
-    #     file_size = stream.filesize
-    #     # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
-    #     self.progress = round((1 - bytes_remaining / file_size) * 100, 3)
