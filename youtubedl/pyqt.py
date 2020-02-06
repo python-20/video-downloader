@@ -114,7 +114,6 @@ class Ui(QtWidgets.QMainWindow):
         """
         Updates progress bar on download_progress callback
         """
-        print("on process callback")
         file_size = stream.filesize
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
