@@ -1,11 +1,10 @@
 import sys
-import time
 import os
 import urllib
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt
 from pytube import YouTube
 
 # from core import getVideoThumbnail
@@ -53,14 +52,16 @@ class Ui(QtWidgets.QMainWindow):
         """
 
         link = self.lineEditURL.text()
-        self.ytube = YouTubeVideo(link, progress_callback=self.download_progress)
+        self.ytube = YouTubeVideo(
+            link, progress_callback=self.download_progress)
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)
 
         # Display thumbnail image
         pixmap = QPixmap()
-        pixmap.loadFromData(urllib.request.urlopen(self.ytube.videoThumbnail).read())
+        pixmap.loadFromData(urllib.request.urlopen(
+            self.ytube.videoThumbnail).read())
         pixmap = pixmap.scaled(
             230, 230, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.labelThumbnail.setPixmap(pixmap)
@@ -77,7 +78,8 @@ class Ui(QtWidgets.QMainWindow):
         self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
         self.lineEditDownloadLocation.setText(self.user_directory)
-        self.logger.info(f"function: getSaveLocation - directory: {self.user_directory}")
+        self.logger.info(
+            f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
         """ Get save location by user text input
@@ -128,11 +130,11 @@ class Ui(QtWidgets.QMainWindow):
         """
         # TODO: support manual directory entry
 
-        print(f"location: {location}")
-        print(f"quality: {quality}")
+        self.logger.info(f"location: {location}")
+        self.logger.info(f"quality: {quality}")
 
         if quality is None:
-            self.ytube.download(folder=location)
+            self.ytube.download(location=location)
 
         self.showPopUp(
             f"{self.ytube.videoTitle} - has been downloaded successfully to:\

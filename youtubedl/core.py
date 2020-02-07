@@ -74,7 +74,8 @@ class YouTubeVideo(Video):
             progress_callback: The name of the callback function to be called
         """
         super().__init__(url, progress_callback)
-        self.yt = YouTube(self.url, on_progress_callback=self.progress_callback)
+        self.yt = YouTube(
+            self.url, on_progress_callback=self.progress_callback)
 
     @property
     def videoId(self):
@@ -115,7 +116,7 @@ class YouTubeVideo(Video):
         """
         return self.yt.streams.all()
 
-    def download(self, folder='./downloads', quality=None):
+    def download(self, location='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'
 
         Override the same method in the Video class.
@@ -127,4 +128,4 @@ class YouTubeVideo(Video):
         """
         # TODO: support manual directory entry
         if quality is None:
-            self.yt.streams.first().download(folder)
+            self.yt.streams.first().download(location)
