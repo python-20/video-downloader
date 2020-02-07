@@ -49,13 +49,16 @@ class Ui(QtWidgets.QMainWindow):
         Retreive information of the video using pytube using the URL entered and process it        
 
         """
+        global ytube
 
         link = self.lineEditURL.text()
-        #Checks if a youtube url is input. otherwise looks like it freezes and gives no output.
+        # Checks if a youtube url is input, exit function on invalid URL
+        # TODO: use regex to match
         correct_url = "www.youtube.com/watch?"
         if correct_url not in link:
-                self.showPopUp("Please input correct url.\nFor example: 'https://www.youtube.com/watch?v=9bZkp7q19f0'")
-        global ytube
+            self.showPopUp("Invalid URL. Please re-enter URL.")
+            return
+
         ytube = YouTube(link, on_progress_callback=self.download_progress)
 
         # Display video title
