@@ -18,7 +18,7 @@ types: features, bugfix, documentation, etc
 
 ## Pull Requests and Merging
 
-Feature branches will be merged into the default branch /trunk (master). 2 Approvals is required for any merging. Reviewers please pull and run the code and make sure it is working before approving.
+Feature branches will be merged into the default branch /trunk (master). 2 Approvals are required for any merging. Reviewers please pull and run the code and make sure it is working before approving.
 
 [Ensure that your commits & Pull Requests have meaningful messages and descriptions](https://chris.beams.io/posts/git-commit/), like:
 ```
