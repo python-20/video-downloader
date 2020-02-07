@@ -53,10 +53,8 @@ class Ui(QtWidgets.QMainWindow):
         link = self.lineEditURL.text()
         #Checks if a youtube url is input. otherwise looks like it freezes and gives no output.
         correct_url = "www.youtube.com/watch?"
-        
         if correct_url not in link:
                 self.showPopUp("Please input correct url.\nFor example: 'https://www.youtube.com/watch?v=9bZkp7q19f0'")
-        
         global ytube
         ytube = YouTube(link, on_progress_callback=self.download_progress)
 
