@@ -8,8 +8,8 @@ from pytube import YouTube
 class Video:
     """ Base class for the (Service)Video object.
 
-    This is an interface class, should not be used directly. A new video service
-    is registered by subclassing it.
+    This is an interface class, it should not be used directly. A new video
+    service is registered by subclassing it.
     """
 
     def __init__(self, url, progress_callback=None):
@@ -63,28 +63,51 @@ class Video:
 
 
 class YouTubeVideo(Video):
+    """ Container for the YouTube video data.
+    """
 
     def __init__(self, url, progress_callback=None):
+        """ Construct the YouTubeVideo object.
+
+        args:
+            url: The URL of a YouTube video
+            progress_callback: The name of the callback function to be called
+        """
         super().__init__(url, progress_callback)
         self.yt = YouTube(self.url, on_progress_callback=self.progress_callback)
 
     @property
     def videoId(self):
+        """ Return the ID of the video.
+
+        Override the correspondent method in the Video class.
+
+        """
         return pytube.extract.video_id(self.url)
 
     @property
     def videoTitle(self):
+        """ Return the title of the video.
+
+        Override the correspondent method in the Video class.
+
+        """
         return self.yt.title
 
     @property
     def videoThumbnail(self):
+        """ Return the video thumbnail.
+
+        Override the correspondent method in the Video class.
+
+        """
         return self.yt.thumbnail_url
 
     @property
     def videoStreamQuality(self):
         """ Get the available stream qualities of the video.
 
-        Override the same method in the Video class.
+        Override the correspondent method in the Video class.
 
         Returns:
         A list of stream object consisting of the available stream qualities for the video
