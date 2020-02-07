@@ -6,32 +6,66 @@ from pytube import YouTube
 
 
 class Video:
+    """ Base class for the (Service)Video object.
+
+    This is an interface class, should not be used directly. A new video service
+    is registered by subclassing it.
+    """
+
+    def __init__(self, url, progress_callback=None):
+        """ Initialize the Video object.
+
+        Args:
+            url: The URL of the video
+            progress_callback: The name of the callback function to be called
+        """
+        self.url = url
+        self.progress_callback = progress_callback
 
     @property
     def videoId(self):
-        pass
+        """ Return the ID of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
     @property
     def videoTitle(self):
-        pass
+        """ Return the title of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
     @property
     def videoThumbnail(self):
-        pass
+        """ Return the video thumbnail.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
     @property
     def videoStreamQuality(self):
-        pass
+        """ Return the available stream qualities of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
     def download(self, defaultQuality=None):
-        pass
+        """ Download the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
 
 class YouTubeVideo(Video):
 
     def __init__(self, url, progress_callback=None):
-        self.url = url
-        self.progress_callback = progress_callback
+        super().__init__(url, progress_callback)
         self.yt = YouTube(self.url, on_progress_callback=self.progress_callback)
 
     @property
@@ -48,16 +82,20 @@ class YouTubeVideo(Video):
 
     @property
     def videoStreamQuality(self):
-        """ Get the available stream qualties of the video
+        """ Get the available stream qualities of the video.
+
+        Override the same method in the Video class.
 
         Returns:
-        A list of stream object consist of the available stream qualities for the video
+        A list of stream object consisting of the available stream qualities for the video
 
         """
         return self.yt.streams.all()
 
     def download(self, folder='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'
+
+        Override the same method in the Video class.
 
         Args:
             location: The location to save the video
