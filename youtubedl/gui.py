@@ -35,6 +35,8 @@ class Ui(QtWidgets.QMainWindow):
         self.lineEditDownloadLocation.returnPressed.connect(
             self.onSaveLocationChange)
 
+        # connect controls and variable names
+
         # initialize progressbar
         self.progressBar.setValue(0)
 
@@ -69,6 +71,12 @@ class Ui(QtWidgets.QMainWindow):
             230, 230, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.labelThumbnail.setPixmap(pixmap)
 
+        # Populate combo box
+        streams = ytube.streams.filter(adaptive=True).all()
+        for stream in streams:
+            if stream.mime_type == "video/mp4" and stream.resolution is not None:
+                self.comboBoxQuality.addItem(stream.resolution, stream.itag)
+
         # debug information
         self.logger.info(f"URL: {self.ytube.url}")
         self.logger.info(f"Video Title: {self.ytube.videoTitle}")
@@ -76,7 +84,7 @@ class Ui(QtWidgets.QMainWindow):
             f"Video Thumbnail: {self.ytube.videoThumbnail}")
 
     def getSaveLocation(self):
-        """ Get user selected directory when the get location button is clicked.
+        """ Get user selected directory when the download button is clicked.
         """
         self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
@@ -85,7 +93,7 @@ class Ui(QtWidgets.QMainWindow):
             f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
-        """ Get save location by user text input
+        """ Get save location by user text input (manual location input)
         """
         entered_directory = self.lineEditDownloadLocation.text()
         # check if directory exist
@@ -131,7 +139,6 @@ class Ui(QtWidgets.QMainWindow):
             quality: The stream quality of the video to be downloaded
 
         """
-        # TODO: support manual directory entry
 
         self.logger.info(f"location: {location}")
         self.logger.info(f"quality: {quality}")
