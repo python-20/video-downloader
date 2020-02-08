@@ -8,12 +8,12 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from pytube import YouTube
 
-from core import getVideoThumbnail
+# from core import getVideoThumbnail
+from core import YouTubeVideo
 from helpers import Helpers
 
 
-ytube = None
-directory = None
+DEFAULT_DIRECTORY = './downloads'
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -42,73 +42,67 @@ class Ui(QtWidgets.QMainWindow):
         # test URL
         self.lineEditURL.setText("https://www.youtube.com/watch?v=9bZkp7q19f0")
 
+        # user directory (chosen for the download)
+        self.user_directory = DEFAULT_DIRECTORY
+
         self.show()
 
     def enterURL(self):
-        """ When OK button is pressed.         
-        Retreive information of the video using pytube using the URL entered and process it        
-
+        """ When OK button is pressed.
+        Use the given URL to retrieve video information and process it
         """
 
         link = self.lineEditURL.text()
-        global ytube
-        ytube = YouTube(link, on_progress_callback=self.download_progress)
+        self.ytube = YouTubeVideo(link, progress_callback=self.download_progress)
 
         # Display video title
-        self.labelVideoTitle.setText(ytube.title)
+        self.labelVideoTitle.setText(self.ytube.videoTitle)
 
         # Display thumbnail image
-        thumbnail_data = urllib.request.urlopen(
-            getVideoThumbnail(ytube.video_id)).read()
         pixmap = QPixmap()
-        pixmap.loadFromData(thumbnail_data)
+        pixmap.loadFromData(urllib.request.urlopen(self.ytube.videoThumbnail).read())
         pixmap = pixmap.scaled(
             230, 230, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.labelThumbnail.setPixmap(pixmap)
 
         # debug information
-        self.logger.info(f"URL: {link}")
-        self.logger.info(f"Video Title: {ytube.title}")
+        self.logger.info(f"URL: {self.ytube.url}")
+        self.logger.info(f"Video Title: {self.ytube.videoTitle}")
         self.logger.info(
-            f"Video Thumbnail: {getVideoThumbnail(ytube.video_id)}")
+            f"Video Thumbnail: {self.ytube.videoThumbnail}")
 
     def getSaveLocation(self):
         """ Get user selected directory when the get location button is clicked.
         """
-        global directory
-        directory = str(QFileDialog.getExistingDirectory(
+        self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
-        self.lineEditDownloadLocation.setText(directory)
-        self.logger.info(f"function: getSaveLocation - directory: {directory}")
+        self.lineEditDownloadLocation.setText(self.user_directory)
+        self.logger.info(f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
         """ Get save location by user text input
         """
-        global directory
         entered_directory = self.lineEditDownloadLocation.text()
         # check if directory exist
         if not os.path.isdir(entered_directory):
             self.lineEditDownloadLocation.setText("")
             self.showPopUp("Directory is not valid. Please re select")
         else:
-            directory = entered_directory
+            self.user_directory = entered_directory
         self.logger.info(
-            f"function: onSaveLocationChange - directory: {directory}")
+            f"function: onSaveLocationChange - directory: {self.user_directory}")
 
     def download_button(self):
         """ When download button is pressed
         """
-        global ytube
-        global directory
-
-        if ytube is not None:
-            self.download(directory)
+        if self.ytube is not None:
+            self.download(location=self.user_directory)
 
     def showPopUp(self, message):
         """ Show pop up message
 
         Args:
-            message: The message to display        
+            message: The message to display
 
         """
         msg = QMessageBox()
@@ -116,17 +110,15 @@ class Ui(QtWidgets.QMainWindow):
         msg.setText(message)
         x = msg.exec_()
 
-    def download_progress(self, stream, chunk, file_handle, bytes_remaining):
+    def download_progress(self, stream=None, chunk=None, file_handle=None, bytes_remaining=None):
         """
         Updates progress bar on download_progress callback
         """
-        # print("on process callback")
         file_size = stream.filesize
-        # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
-    def download(self, location=None, quality=None):
+    def download(self, location=DEFAULT_DIRECTORY, quality=None):
         """ Download the video. Default save location is './downloads'
 
         Args:
@@ -136,18 +128,14 @@ class Ui(QtWidgets.QMainWindow):
         """
         # TODO: support manual directory entry
 
-        global ytube
-
         print(f"location: {location}")
         print(f"quality: {quality}")
 
-        if location is None:
-            location = './downloads'
         if quality is None:
-            ytube.streams.first().download(location)
+            self.ytube.download(folder=location)
 
         self.showPopUp(
-            f"{ytube.title} - has been downloaded successfully to:\
+            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
             \n{os.path.abspath(location)}")
 
 
