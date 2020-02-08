@@ -1,31 +1,125 @@
+import pytube
+
 from pytube import YouTube
 
-# https://python-pytube.readthedocs.io/en/latest/user/quickstart.html
+# https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
 
-def getVideoThumbnail(video_id):
-    """ Get the video thumbnail
+class Video:
+    """ Base class for the (Service)Video object.
 
-    Returns:
-    URL of the thumbnail of the video
-
+    This is an interface class, it should not be used directly. A new video
+    service is registered by subclassing it.
     """
-    return f'https://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
+
+    def __init__(self, url, progress_callback=None):
+        """ Initialize the Video object.
+
+        Args:
+            url: The URL of the video
+            progress_callback: The name of the callback function to be called
+        """
+        self.url = url
+        self.progress_callback = progress_callback
+
+    @property
+    def videoId(self):
+        """ Return the ID of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
+
+    @property
+    def videoTitle(self):
+        """ Return the title of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
+
+    @property
+    def videoThumbnail(self):
+        """ Return the video thumbnail.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
+
+    @property
+    def videoStreamQuality(self):
+        """ Return the available stream qualities of the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
+
+    def download(self, defaultQuality=None):
+        """ Download the video.
+
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
 
-class YouTubeVideo:
+class YouTubeVideo(Video):
+    """ Container for the YouTube video data.
+    """
 
-    def getStreamQuality(self):
-        """ Get the available stream qualties of the video
+    def __init__(self, url, progress_callback=None):
+        """ Construct the YouTubeVideo object.
+
+        args:
+            url: The URL of a YouTube video
+            progress_callback: The name of the callback function to be called
+        """
+        super().__init__(url, progress_callback)
+        self.yt = YouTube(
+            self.url, on_progress_callback=self.progress_callback)
+
+    @property
+    def videoId(self):
+        """ Return the ID of the video.
+
+        Override the correspondent method in the Video class.
+
+        """
+        return pytube.extract.video_id(self.url)
+
+    @property
+    def videoTitle(self):
+        """ Return the title of the video.
+
+        Override the correspondent method in the Video class.
+
+        """
+        return self.yt.title
+
+    @property
+    def videoThumbnail(self):
+        """ Return the video thumbnail.
+
+        Override the correspondent method in the Video class.
+
+        """
+        return self.yt.thumbnail_url
+
+    @property
+    def videoStreamQuality(self):
+        """ Get the available stream qualities of the video.
+
+        Override the correspondent method in the Video class.
 
         Returns:
-        A list of stream object consist of the available stream qualities for the video
+        A list of stream object consisting of the available stream qualities for the video
 
         """
         return self.yt.streams.all()
 
-    def download(self, location=None, quality=None):
+    def download(self, location='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'
+
+        Override the same method in the Video class.
 
         Args:
             location: The location to save the video
@@ -33,13 +127,5 @@ class YouTubeVideo:
 
         """
         # TODO: support manual directory entry
-        if location is None:
-            location = './downloads'
         if quality is None:
             self.yt.streams.first().download(location)
-
-    def download_progress(self, stream, chunk, file_handle, bytes_remaining):
-        # print("on process callback")
-        file_size = stream.filesize
-        # print(f"{round((1 - bytes_remaining / file_size) * 100, 3)}%")
-        self.progress = round((1 - bytes_remaining / file_size) * 100, 3)
