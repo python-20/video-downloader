@@ -54,6 +54,9 @@ class Ui(QtWidgets.QMainWindow):
         link = self.lineEditURL.text()
         self.ytube = YouTubeVideo(
             link, progress_callback=self.download_progress)
+        if self.ytube.error:
+            self.showPopUp(self.ytube.error)
+            return
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)
