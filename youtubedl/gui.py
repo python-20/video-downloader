@@ -11,6 +11,8 @@ from pytube import YouTube
 from core import YouTubeVideo
 from helpers import Helpers
 
+#
+from pytube import exceptions as pytubeExceptions
 
 DEFAULT_DIRECTORY = './downloads'
 
@@ -52,8 +54,22 @@ class Ui(QtWidgets.QMainWindow):
         """
 
         link = self.lineEditURL.text()
-        self.ytube = YouTubeVideo(
-            link, progress_callback=self.download_progress)
+
+        try:
+            self.ytube = YouTubeVideo(
+                link, progress_callback=self.download_progress)
+        except pytubeExceptions.RegexMatchError:
+            # Catches a Regex Error from URLs with invalid format
+            self.showPopUp(f"{link} is an invalid URL")
+            self.logger.error("Caught error: RegexMatchError")
+            self.logger.error(f"Inputted link \"{link}\" is not a valid URL")
+            return
+        except pytubeExceptions.VideoUnavailable:
+            # Catches a VideoUnavailable Error if pytube cannot process the video
+            self.showPopUp(f"{link} does not exist")
+            self.logger.error(f"Caught error: VideoUnavailable")
+            self.logger.error(f"Inputted link \"{link}\" does not exist")
+            return
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)
