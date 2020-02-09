@@ -72,7 +72,7 @@ class Ui(QtWidgets.QMainWindow):
         self.labelThumbnail.setPixmap(pixmap)
 
         # Populate combo box
-        streams = self.ytube.videoStreams(filter="adaptive=True")
+        streams = self.ytube.adaptiveVideoStreams
         for stream in streams:
             if stream.mime_type == "video/mp4" and stream.resolution is not None:
                 self.comboBoxQuality.addItem(stream.resolution, stream.itag)
@@ -106,10 +106,20 @@ class Ui(QtWidgets.QMainWindow):
             f"function: onSaveLocationChange - directory: {self.user_directory}")
 
     def download_button(self):
-        """ When download button is pressed
         """
+        When download button is pressed
+        """
+        # get selected stream quality (itag)
+
+        self.logger.info(
+            f"itag of quality selected is "
+            f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
+
+        itag = self.comboBoxQuality.itemData(
+            self.comboBoxQuality.currentIndex())
+
         if self.ytube is not None:
-            self.download(location=self.user_directory)
+            self.ytube.download(location=self.user_directory, itag=itag)
 
     def showPopUp(self, message):
         """ Show pop up message
@@ -131,24 +141,23 @@ class Ui(QtWidgets.QMainWindow):
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
-    def download(self, location=DEFAULT_DIRECTORY, quality=None):
-        """ Download the video. Default save location is './downloads'
+    """
+    def download(self, location=DEFAULT_DIRECTORY, itag=None):
+         Download the video. Default save location is './downloads'
 
         Args:
             location: The location to save the video
             quality: The stream quality of the video to be downloaded
 
-        """
+     
 
-        self.logger.info(f"location: {location}")
-        self.logger.info(f"quality: {quality}")
-
-        if quality is None:
+        if itag is None:
             self.ytube.download(location=location)
 
         self.showPopUp(
             f"{self.ytube.videoTitle} - has been downloaded successfully to:\
             \n{os.path.abspath(location)}")
+"""
 
 
 app = QtWidgets.QApplication(sys.argv)

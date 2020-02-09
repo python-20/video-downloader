@@ -123,22 +123,32 @@ class YouTubeVideo(Video):
             return self.yt.thumbnail_url
 
     @property
-    def videoStreams(self, filter=None):
-        """ Get the available streams of the video.
+    def allVideoStreams(self):
+        """ Get all available streams of the video.
 
         Override the correspondent method in the Video class.
 
         Returns:
-        A list of stream object consisting of the available stream qualities for the video
+        A list of stream objects consisting of the available stream qualities for the video
 
         """
         # TODO: fix this
         if not self.error:
             return self.yt.streams.all()
 
-        return self.yt.streams.filter(filter).all()
+    @property
+    def adaptiveVideoStreams(self):
+        """ Get adaptive streams of the video.
 
-    def download(self, location='./downloads', quality=None):
+        Override the correspondent method in the Video class.
+
+        Returns:
+        A list of adaptive stream objects consisting of the available stream qualities for the video
+
+        """
+        return self.yt.streams.filter(adaptive=True).all()
+
+    def download(self, location='./downloads', itag=None):
         """ Download the video. Default save location is './downloads'
 
         Override the same method in the Video class.
@@ -150,5 +160,8 @@ class YouTubeVideo(Video):
         """
         # TODO: support manual directory entry
         if not self.error:
-            if quality is None:
+            if itag is None:
                 self.yt.streams.first().download(location)
+            else:
+                self.logger.info("download by itag")
+                self.yt.streams.get_by_itag(itag).download(location)
