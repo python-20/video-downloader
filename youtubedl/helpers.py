@@ -18,7 +18,8 @@ class Helpers:
         logger = logging.getLogger(appName)
         logger.setLevel(logging.INFO)
 
-        infoLog = logging.FileHandler('{}{}_info.log'.format(logging_directory, appName), 'w+', 'utf-8')
+        infoLog = logging.FileHandler('{}{}_info.log'.format(
+            logging_directory, appName), 'w+', 'utf-8')
         infoLog.setLevel(logging.INFO)
 
         formatter = logging.Formatter('%(levelname)s - %(message)s')
