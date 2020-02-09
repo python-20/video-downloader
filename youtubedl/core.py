@@ -1,4 +1,5 @@
 import pytube
+import os
 
 from helpers import Helpers
 from pytube import YouTube
@@ -161,7 +162,14 @@ class YouTubeVideo(Video):
         # TODO: support manual directory entry
         if not self.error:
             if itag is None:
+                # This will often be a progressive stream, which audio is included
                 self.yt.streams.first().download(location)
             else:
-                self.logger.info("download by itag")
-                self.yt.streams.get_by_itag(itag).download(location)
+                # download video stream
+                stream = self.yt.streams.get_by_itag(itag)
+                video_filename = f"{self.yt.title} ({stream.resolution})"
+                stream.download(output_path=location, filename=video_filename)
+                # download audio stream
+                audio_filename = self.yt.streams.filter(
+                    only_audio=True).first().download(output_path=location)
+            # os.path.abspath(location)
