@@ -1,6 +1,8 @@
 import pytube
 
+from helpers import Helpers
 from pytube import YouTube
+from pytube.exceptions import RegexMatchError, VideoUnavailable
 
 # https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
@@ -21,6 +23,7 @@ class Video:
         """
         self.url = url
         self.progress_callback = progress_callback
+        self.logger = Helpers.logging_setup("logs/", "Video Downloader")
 
     @property
     def videoId(self):
@@ -74,8 +77,20 @@ class YouTubeVideo(Video):
             progress_callback: The name of the callback function to be called
         """
         super().__init__(url, progress_callback)
-        self.yt = YouTube(
-            self.url, on_progress_callback=self.progress_callback)
+        self.error = False
+        try:
+            self.yt = YouTube(
+                url, on_progress_callback=progress_callback)
+        except RegexMatchError:
+            # Catches a Regex Error from URLs with invalid format
+            self.logger.error("Caught error: RegexMatchError")
+            self.logger.error(f"Inputted link \"{url}\" is not a valid URL")
+            self.error = f"{url} is an invalid URL"
+        except VideoUnavailable:
+            # Catches a VideoUnavailable Error if pytube cannot process the video
+            self.logger.error(f"Caught error: VideoUnavailable")
+            self.logger.error(f"Inputted link \"{url}\" does not exist")
+            self.error = f"{url} does not exist"
 
     @property
     def videoId(self):
@@ -84,7 +99,8 @@ class YouTubeVideo(Video):
         Override the correspondent method in the Video class.
 
         """
-        return pytube.extract.video_id(self.url)
+        if not self.error:
+            return pytube.extract.video_id(self.url)
 
     @property
     def videoTitle(self):
@@ -93,7 +109,8 @@ class YouTubeVideo(Video):
         Override the correspondent method in the Video class.
 
         """
-        return self.yt.title
+        if not self.error:
+            return self.yt.title
 
     @property
     def videoThumbnail(self):
@@ -102,7 +119,8 @@ class YouTubeVideo(Video):
         Override the correspondent method in the Video class.
 
         """
-        return self.yt.thumbnail_url
+        if not self.error:
+            return self.yt.thumbnail_url
 
     @property
     def videoStreamQuality(self):
@@ -114,7 +132,8 @@ class YouTubeVideo(Video):
         A list of stream object consisting of the available stream qualities for the video
 
         """
-        return self.yt.streams.all()
+        if not self.error:
+            return self.yt.streams.all()
 
     def download(self, location='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'
@@ -127,5 +146,6 @@ class YouTubeVideo(Video):
 
         """
         # TODO: support manual directory entry
-        if quality is None:
-            self.yt.streams.first().download(location)
+        if not self.error:
+            if quality is None:
+                self.yt.streams.first().download(location)
