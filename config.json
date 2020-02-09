@@ -1,0 +1,11 @@
+{
+    "directory": "C:/Download",
+    "popups": true,
+    "progressive": false,
+    "adaptive": true,
+    "audio": true,
+    "defaultQuality": "1080p",
+    "defaultMedia": "mp4",
+    "theme": "jekyll-theme-minimal",
+    "textSize": 16
+}
