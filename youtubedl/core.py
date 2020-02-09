@@ -2,7 +2,7 @@ import pytube
 
 # from helpers import Helpers
 from pytube import YouTube
-from pytube.exceptions import RegexMatchError, VideoUnavailable
+from pytube.exceptions import RegexMatchError, VideoUnavailable, HTMLParseError
 
 from loggers import logger
 
@@ -81,6 +81,7 @@ class YouTubeVideo(Video):
         super().__init__(url, progress_callback)
         self.error = False
         try:
+            raise SyntaxError
             self.yt = YouTube(
                 url, on_progress_callback=progress_callback)
             logger.info(f"URL: {self.url}")
@@ -94,6 +95,12 @@ class YouTubeVideo(Video):
             logger.error(f"Caught error: VideoUnavailable")
             logger.error(f"Inputted link \"{url}\" does not exist")
             self.error = f"{url} does not exist"
+        except Exception as generalError:
+            # Catches
+            exceptionName = generalError.__class__.__name__
+            self.logger.error(f"General Error Caught: {exceptionName}")
+            self.logger.error(f"{generalError}")
+            self.error = f"{exceptionName}:\n{generalError}"
 
     @property
     def videoId(self):
