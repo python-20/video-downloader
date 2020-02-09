@@ -123,8 +123,8 @@ class YouTubeVideo(Video):
             return self.yt.thumbnail_url
 
     @property
-    def videoStreamQuality(self):
-        """ Get the available stream qualities of the video.
+    def videoStreams(self, filter=None):
+        """ Get the available streams of the video.
 
         Override the correspondent method in the Video class.
 
@@ -132,8 +132,11 @@ class YouTubeVideo(Video):
         A list of stream object consisting of the available stream qualities for the video
 
         """
+        # TODO: fix this
         if not self.error:
             return self.yt.streams.all()
+
+        return self.yt.streams.filter(filter).all()
 
     def download(self, location='./downloads', quality=None):
         """ Download the video. Default save location is './downloads'

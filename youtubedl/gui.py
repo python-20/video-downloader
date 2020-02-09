@@ -72,7 +72,7 @@ class Ui(QtWidgets.QMainWindow):
         self.labelThumbnail.setPixmap(pixmap)
 
         # Populate combo box
-        streams = ytube.streams.filter(adaptive=True).all()
+        streams = self.ytube.videoStreams(filter="adaptive=True")
         for stream in streams:
             if stream.mime_type == "video/mp4" and stream.resolution is not None:
                 self.comboBoxQuality.addItem(stream.resolution, stream.itag)
