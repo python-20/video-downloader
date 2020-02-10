@@ -194,26 +194,6 @@ class Ui(QtWidgets.QMainWindow):
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
-    def download(self, location=DEFAULT_DIRECTORY, itag=None):
-        """
-         Download the video. Default save location is './downloads'
-
-        Args:
-            location: The location to save the video
-            quality: The stream quality of the video to be downloaded
-
-        """
-
-        logger.info(f"location: {location}")
-        logger.info(f"quality: {quality}")
-
-        if itag is None:
-            self.ytube.download(location=location)
-
-        self.showPopUp(
-            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
-            \n{os.path.abspath(location)}")
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
