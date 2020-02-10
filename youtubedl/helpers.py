@@ -6,40 +6,34 @@ DEFAULT_DIRECTORY = "./downloads"
 APP_NAME = "Video Downloader"
 
 
-class Helpers:
-
+def logging_setup(logging_directory, appName=APP_NAME):
     """
-    Class used for auxiliary functions non related to core functionality of the application
+    Function to redirect logs to files
+    Current enabled logger(s): info (logging.info)
     """
+    if not os.path.exists(logging_directory):
+        os.makedirs(logging_directory)
 
-    def logging_setup(logging_directory, appName=APP_NAME):
-        """
-        Function to redirect logs to files
-        Current enabled logger(s): info (logging.info)
-        """
-        if not os.path.exists(logging_directory):
-            os.makedirs(logging_directory)
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
 
-        logger = logging.getLogger(appName)
-        logger.setLevel(logging.INFO)
+    infoLog = logging.FileHandler(
+        f"{logging_directory}{appName}_info.log", 'w+', 'utf-8')
+    infoLog.setLevel(logging.INFO)
 
-        infoLog = logging.FileHandler('{}{}_info.log'.format(
-            logging_directory, appName), 'w+', 'utf-8')
-        infoLog.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(levelname)s - %(message)s')
+    infoLog.setFormatter(formatter)
 
-        formatter = logging.Formatter('%(levelname)s - %(message)s')
-        infoLog.setFormatter(formatter)
+    logger.addHandler(infoLog)
 
-        logger.addHandler(infoLog)
+    infoLogscreen = logging.StreamHandler()
 
-        infoLogscreen = logging.StreamHandler()
+    infoLogscreen.setLevel(logging.INFO)
+    infoLogscreen.setFormatter(formatter)
 
-        infoLogscreen.setLevel(logging.INFO)
-        infoLogscreen.setFormatter(formatter)
+    logger.addHandler(infoLogscreen)
 
-        logger.addHandler(infoLogscreen)
-
-        return logger
+    return logger
 
 
-logger = Helpers.logging_setup("logs/", APP_NAME)
+logger = logging_setup("logs/")

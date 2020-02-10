@@ -17,7 +17,7 @@ class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         self.appName = APP_NAME
-        # self.logger = Helpers.logging_setup("logs/", APP_NAME)
+
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -146,7 +146,7 @@ class Ui(QtWidgets.QMainWindow):
         """
         # get selected stream quality (itag)
 
-        self.logger.info(
+        logger.info(
             f"itag of quality selected is "
             f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
 
@@ -197,7 +197,7 @@ class Ui(QtWidgets.QMainWindow):
             \n{os.path.abspath(location)}")
 
 
-# logger = Helpers.logging_setup("logs/", APP_NAME)
-app = QtWidgets.QApplication(sys.argv)
-window = Ui()
-app.exec_()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = Ui()
+    app.exec_()
