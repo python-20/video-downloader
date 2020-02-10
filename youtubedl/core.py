@@ -2,7 +2,7 @@ import pytube
 
 # from helpers import Helpers
 from pytube import YouTube
-from pytube.exceptions import RegexMatchError, VideoUnavailable, HTMLParseError
+from pytube.exceptions import RegexMatchError, VideoUnavailable
 
 from loggers import logger
 
@@ -81,7 +81,6 @@ class YouTubeVideo(Video):
         super().__init__(url, progress_callback)
         self.error = False
         try:
-            raise SyntaxError
             self.yt = YouTube(
                 url, on_progress_callback=progress_callback)
             logger.info(f"URL: {self.url}")
