@@ -9,11 +9,7 @@ from pytube import YouTube
 
 # from core import getVideoThumbnail
 from core import YouTubeVideo
-from helpers import APP_NAME, DEFAULT_DIRECTORY
-
-from loggers import logger
-# DEFAULT_DIRECTORY = './downloads'
-# APP_NAME = "Video Downloader"
+from helpers import logger, APP_NAME, DEFAULT_DIRECTORY
 
 
 class Ui(QtWidgets.QMainWindow):
