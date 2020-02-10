@@ -11,7 +11,7 @@ from pytube import YouTube
 from core import YouTubeVideo
 from helpers import APP_NAME, DEFAULT_DIRECTORY
 
-
+from loggers import logger
 # DEFAULT_DIRECTORY = './downloads'
 # APP_NAME = "Video Downloader"
 
