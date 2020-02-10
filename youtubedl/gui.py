@@ -9,11 +9,11 @@ from pytube import YouTube
 
 # from core import getVideoThumbnail
 from core import YouTubeVideo
-from helpers import Helpers
+from helpers import APP_NAME, DEFAULT_DIRECTORY
 
 
-DEFAULT_DIRECTORY = './downloads'
-APP_NAME = "Video Downloader"
+# DEFAULT_DIRECTORY = './downloads'
+# APP_NAME = "Video Downloader"
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -21,7 +21,7 @@ class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         self.appName = APP_NAME
-        self.logger = Helpers.logging_setup("logs/", APP_NAME)
+        # self.logger = Helpers.logging_setup("logs/", APP_NAME)
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -82,7 +82,7 @@ class Ui(QtWidgets.QMainWindow):
         self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
         self.lineEditDownloadLocation.setText(self.user_directory)
-        self.logger.info(
+        logger.info(
             f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
@@ -95,7 +95,7 @@ class Ui(QtWidgets.QMainWindow):
             self.showPopUp("Directory is not valid. Please re select")
         else:
             self.user_directory = entered_directory
-        self.logger.info(
+        logger.info(
             f"function: onSaveLocationChange - directory: {self.user_directory}")
 
     def download_button(self):
@@ -134,8 +134,8 @@ class Ui(QtWidgets.QMainWindow):
         """
         # TODO: support manual directory entry
 
-        self.logger.info(f"location: {location}")
-        self.logger.info(f"quality: {quality}")
+        logger.info(f"location: {location}")
+        logger.info(f"quality: {quality}")
 
         if quality is None:
             self.ytube.download(location=location)
@@ -145,6 +145,7 @@ class Ui(QtWidgets.QMainWindow):
             \n{os.path.abspath(location)}")
 
 
+# logger = Helpers.logging_setup("logs/", APP_NAME)
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
 app.exec_()

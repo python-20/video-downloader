@@ -1,8 +1,10 @@
 import pytube
 
-from helpers import Helpers
+# from helpers import Helpers
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError, VideoUnavailable
+
+from loggers import logger
 
 # https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
@@ -23,7 +25,7 @@ class Video:
         """
         self.url = url
         self.progress_callback = progress_callback
-        self.logger = Helpers.logging_setup("logs/", "Video Downloader")
+        # self.logger = Helpers.logging_setup("logs/", "Video Downloader")
 
     @property
     def videoId(self):
@@ -81,18 +83,16 @@ class YouTubeVideo(Video):
         try:
             self.yt = YouTube(
                 url, on_progress_callback=progress_callback)
-            self.logger.info(f"URL: {self.yt.url}")
-            self.logger.info(f"Video Title: {self.yt.videoTitle}")
-            self.logger.info(f"Video Thumbnail: {self.yt.videoThumbnail}")
+            logger.info(f"URL: {self.url}")
         except RegexMatchError:
             # Catches a Regex Error from URLs with invalid format
-            self.logger.error("Caught error: RegexMatchError")
-            self.logger.error(f"Inputted link \"{url}\" is not a valid URL")
+            logger.error("Caught error: RegexMatchError")
+            logger.error(f"Inputted link \"{url}\" is not a valid URL")
             self.error = f"{url} is an invalid URL"
         except VideoUnavailable:
             # Catches a VideoUnavailable Error if pytube cannot process the video
-            self.logger.error(f"Caught error: VideoUnavailable")
-            self.logger.error(f"Inputted link \"{url}\" does not exist")
+            logger.error(f"Caught error: VideoUnavailable")
+            logger.error(f"Inputted link \"{url}\" does not exist")
             self.error = f"{url} does not exist"
 
     @property
@@ -113,6 +113,7 @@ class YouTubeVideo(Video):
 
         """
         if not self.error:
+            logger.info(f"Video Title: {self.yt.title}")
             return self.yt.title
 
     @property
@@ -123,6 +124,7 @@ class YouTubeVideo(Video):
 
         """
         if not self.error:
+            logger.info(f"Video Thumbnail: {self.yt.thumbnail_url}")
             return self.yt.thumbnail_url
 
     @property
