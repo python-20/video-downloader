@@ -7,12 +7,11 @@ APP_NAME = "Video Downloader"
 
 
 class Helpers:
-
     """
     Class used for auxiliary functions non related to core functionality of the application
     """
 
-    def logging_setup(logging_directory, appName=APP_NAME):
+    def logging_setup(logging_directory, appName):
         """
         Function to redirect logs to files
         Current enabled logger(s): info (logging.info)
@@ -40,6 +39,3 @@ class Helpers:
         logger.addHandler(infoLogscreen)
 
         return logger
-
-
-logger = Helpers.logging_setup("logs/", APP_NAME)
