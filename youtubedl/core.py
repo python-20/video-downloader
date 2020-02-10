@@ -91,12 +91,14 @@ class YouTubeVideo(Video):
             self.logger.error(f"Caught error: VideoUnavailable")
             self.logger.error(f"Inputted link \"{url}\" does not exist")
             self.error = f"{url} does not exist"
-        except Exception as generalError:
-            # Catches
-            exceptionName = generalError.__class__.__name__
+        except Exception as errorMessage:
+            # Catches any other unexpected error
+            exceptionName = errorMessage.__class__.__name__
             self.logger.error(f"General Error Caught: {exceptionName}")
-            self.logger.error(f"{generalError}")
-            self.error = f"{exceptionName}:\n{generalError}"
+            self.logger.error(f"{errorMessage}")
+            self.error = f"{exceptionName}:\n{errorMessage}"
+        '''finally:
+            self.logger.error(f"")'''
 
     @property
     def videoId(self):
