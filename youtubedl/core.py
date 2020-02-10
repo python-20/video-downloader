@@ -25,44 +25,44 @@ class Video:
         self.progress_callback = progress_callback
         # self.logger = Helpers.logging_setup("logs/", "Video Downloader")
 
-    # @property
-    # def videoId(self):
-    #     """ Return the ID of the video.
+    @property
+    def videoId(self):
+        """ Return the ID of the video.
 
-    #     This method should be overriden in the (Service)Video class.
-    #     """
-    #     raise NotImplementedError
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
-    # @property
-    # def videoTitle(self):
-    #     """ Return the title of the video.
+    @property
+    def videoTitle(self):
+        """ Return the title of the video.
 
-    #     This method should be overriden in the (Service)Video class.
-    #     """
-    #     raise NotImplementedError
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
-    # @property
-    # def videoThumbnail(self):
-    #     """ Return the video thumbnail.
+    @property
+    def videoThumbnail(self):
+        """ Return the video thumbnail.
 
-    #     This method should be overriden in the (Service)Video class.
-    #     """
-    #     raise NotImplementedError
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
-    # @property
-    # def allVideoStreams(self):
-    #     """ Return the available stream qualities of the video.
+    @property
+    def allVideoStreams(self):
+        """ Return the available stream qualities of the video.
 
-    #     This method should be overriden in the (Service)Video class.
-    #     """
-    #     raise NotImplementedError
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
-    # def download(self, defaultQuality=None):
-    #     """ Download the video.
+    def download(self, defaultQuality=None):
+        """ Download the video.
 
-    #     This method should be overriden in the (Service)Video class.
-    #     """
-    #     raise NotImplementedError
+        This method should be overriden in the (Service)Video class.
+        """
+        raise NotImplementedError
 
 
 class YouTubeVideo(Video):
