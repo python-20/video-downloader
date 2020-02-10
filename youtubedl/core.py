@@ -53,7 +53,7 @@ class Video:
         raise NotImplementedError
 
     @property
-    def videoStreamQuality(self):
+    def allVideoStreams(self):
         """ Return the available stream qualities of the video.
 
         This method should be overriden in the (Service)Video class.
@@ -98,8 +98,8 @@ class YouTubeVideo(Video):
         except Exception as errorMessage:
             # Catches any other unexpected error
             exceptionName = errorMessage.__class__.__name__
-            self.logger.error(f"General Error Caught: {exceptionName}")
-            self.logger.error(f"{errorMessage}")
+            logger.error(f"General Error Caught: {exceptionName}")
+            logger.error(f"{errorMessage}")
             self.error = f"{exceptionName}:\n{errorMessage}"
         '''finally:
             self.logger.error(f"")'''
@@ -146,9 +146,20 @@ class YouTubeVideo(Video):
         A list of stream objects consisting of the available stream qualities for the video
 
         """
-        # TODO: fix this
         if not self.error:
             return self.yt.streams.all()
+
+    @property
+    def audioStreams(self):
+        """ Get audio streams of the video.
+
+        Override the correspondent method in the Video class.
+
+        Returns:
+        A list of audio stream objects consisting of the available stream qualities for the video
+
+        """
+        return self.yt.streams.filter(only_audio=True).all()
 
     @property
     def adaptiveVideoStreams(self):
@@ -162,6 +173,18 @@ class YouTubeVideo(Video):
         """
         return self.yt.streams.filter(adaptive=True).all()
 
+    @property
+    def progressiveVideoStreams(self):
+        """ Get progressive streams of the video.
+
+        Override the correspondent method in the Video class.
+
+        Returns:
+        A list of progressive stream objects consisting of the available stream qualities for the video
+
+        """
+        return self.yt.streams.filter(progressive=True).all()
+
     def download(self, location='./downloads', itag=None):
         """ Download the video. Default save location is './downloads'
 
@@ -172,7 +195,6 @@ class YouTubeVideo(Video):
             quality: The stream quality of the video to be downloaded
 
         """
-        # TODO: support manual directory entry
         if not self.error:
             if itag is None:
                 # This will often be a progressive stream, which audio is included
@@ -180,9 +202,13 @@ class YouTubeVideo(Video):
             else:
                 # download video stream
                 stream = self.yt.streams.get_by_itag(itag)
-                video_filename = f"{self.yt.title} ({stream.resolution})"
+                video_filename = f"{self.yt.title} ({stream.resolution or stream.abr})"
                 stream.download(output_path=location, filename=video_filename)
-                # download audio stream
+                # TODO: re-enable for adaptive stream support
+                """
+                # download audio stream for adaptive streams
                 audio_filename = self.yt.streams.filter(
                     only_audio=True).first().download(output_path=location)
-            # os.path.abspath(location)
+                # get absolute path
+                os.path.abspath(location)
+                """
