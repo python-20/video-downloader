@@ -13,14 +13,15 @@ from helpers import Helpers
 
 
 DEFAULT_DIRECTORY = './downloads'
+APP_NAME = "Video Downloader"
 
 
 class Ui(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Ui, self).__init__()
-        self.appName = "Video Downloader"
-        self.logger = Helpers.logging_setup("logs/", self.appName)
+        self.appName = APP_NAME
+        self.logger = Helpers.logging_setup("logs/", APP_NAME)
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -70,10 +71,10 @@ class Ui(QtWidgets.QMainWindow):
         self.labelThumbnail.setPixmap(pixmap)
 
         # debug information
-        self.logger.info(f"URL: {self.ytube.url}")
-        self.logger.info(f"Video Title: {self.ytube.videoTitle}")
-        self.logger.info(
-            f"Video Thumbnail: {self.ytube.videoThumbnail}")
+        # self.logger.info(f"URL: {self.ytube.url}")
+        # self.logger.info(f"Video Title: {self.ytube.videoTitle}")
+        # self.logger.info(
+        #     f"Video Thumbnail: {self.ytube.videoThumbnail}")
 
     def getSaveLocation(self):
         """ Get user selected directory when the get location button is clicked.

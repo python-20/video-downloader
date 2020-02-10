@@ -81,6 +81,9 @@ class YouTubeVideo(Video):
         try:
             self.yt = YouTube(
                 url, on_progress_callback=progress_callback)
+            self.logger.info(f"URL: {self.yt.url}")
+            self.logger.info(f"Video Title: {self.yt.videoTitle}")
+            self.logger.info(f"Video Thumbnail: {self.yt.videoThumbnail}")
         except RegexMatchError:
             # Catches a Regex Error from URLs with invalid format
             self.logger.error("Caught error: RegexMatchError")
