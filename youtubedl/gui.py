@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import urllib
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
@@ -7,7 +8,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
-# from core import getVideoThumbnail
+
 from core import YouTubeVideo
 from helpers import logger, APP_NAME, DEFAULT_DIRECTORY
 
@@ -53,6 +54,8 @@ class Ui(QtWidgets.QMainWindow):
         Use the given URL to retrieve video information and process it
         """
 
+        start_time = time.time()
+
         link = self.lineEditURL.text()
         self.ytube = YouTubeVideo(
             link, progress_callback=self.download_progress)
@@ -77,11 +80,16 @@ class Ui(QtWidgets.QMainWindow):
         # enable download button
         self.btnDownload.setEnabled(True)
 
+        # TODO get the rest of useful data
+
         # debug information
         # self.logger.info(f"URL: {self.ytube.url}")
         # self.logger.info(f"Video Title: {self.ytube.videoTitle}")
         # self.logger.info(
         #     f"Video Thumbnail: {self.ytube.videoThumbnail}")
+
+        final_time = round(time.time() - start_time)
+        logger.info(f"It took {final_time}s to get the data")
 
     def populateComboBox(self):
         """ Populate stream quality combobox (comboBoxQuality)
@@ -146,6 +154,9 @@ class Ui(QtWidgets.QMainWindow):
         """
         # get selected stream quality (itag)
 
+        # Timer for downlad log
+        start_time = time.time()
+
         logger.info(
             f"itag of quality selected is "
             f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
@@ -155,6 +166,13 @@ class Ui(QtWidgets.QMainWindow):
 
         if self.ytube is not None:
             self.ytube.download(location=self.user_directory, itag=itag)
+
+        # Logging & Popup
+        final_time = round(time.time() - start_time)
+        logger.info(f"It took {final_time}s to download the video")
+        self.showPopUp(
+            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
+            \n{os.path.abspath(location)}")
 
     def showPopUp(self, message):
         """ Show pop up message

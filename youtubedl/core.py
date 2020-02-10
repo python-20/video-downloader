@@ -209,3 +209,9 @@ class YouTubeVideo(Video):
                 # get absolute path
                 os.path.abspath(location)
                 """
+
+
+if __name__ == "__main__":
+    video = YouTubeVideo("https://www.youtube.com/watch?v=7BgcG_l9J0A")
+    streams = video.allVideoStreams()
+    print(streams)
