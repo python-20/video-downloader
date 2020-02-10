@@ -30,6 +30,7 @@ class Ui(QtWidgets.QMainWindow):
 
         # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
+        self.lineEditURL.returnPressed.connect(self.enterURL)
         self.btnDownload.clicked.connect(self.download_button)
         self.btnDownloadLocation.clicked.connect(self.getSaveLocation)
         self.lineEditDownloadLocation.returnPressed.connect(
@@ -37,12 +38,10 @@ class Ui(QtWidgets.QMainWindow):
         self.checkBoxVideo.stateChanged.connect(self.populateComboBox)
         self.checkBoxAudio.stateChanged.connect(self.populateComboBox)
 
-        # connect controls and variable names
-
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
-        # video checkbox checked by default
         self.checkBoxVideo.setChecked(True)
+        self.btnDownload.setEnabled(False)
 
         # test URL
         self.lineEditURL.setText("https://www.youtube.com/watch?v=7BgcG_l9J0A")
@@ -77,6 +76,9 @@ class Ui(QtWidgets.QMainWindow):
 
         # Populate combo box
         self.populateComboBox()
+
+        # enable download button
+        self.btnDownload.setEnabled(True)
 
         # debug information
         self.logger.info(f"URL: {self.ytube.url}")
