@@ -7,20 +7,15 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
-# from core import getVideoThumbnail
 from core import YouTubeVideo
-from helpers import Helpers
-
-
-DEFAULT_DIRECTORY = './downloads'
+from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
 
 
 class Ui(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Ui, self).__init__()
-        self.appName = "Video Downloader"
-        self.logger = Helpers.logging_setup("logs/", self.appName)
+        self.appName = APP_NAME
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -121,13 +116,14 @@ class Ui(QtWidgets.QMainWindow):
         except AttributeError:
             pass
 
+
     def getSaveLocation(self):
         """ Get user selected directory when the download button is clicked.
         """
         self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
         self.lineEditDownloadLocation.setText(self.user_directory)
-        self.logger.info(
+        logger.info(
             f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
@@ -140,7 +136,7 @@ class Ui(QtWidgets.QMainWindow):
             self.showPopUp("Directory is not valid. Please re select")
         else:
             self.user_directory = entered_directory
-        self.logger.info(
+        logger.info(
             f"function: onSaveLocationChange - directory: {self.user_directory}")
 
     def download_button(self):
@@ -179,12 +175,15 @@ class Ui(QtWidgets.QMainWindow):
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
 
+
     """
     TODO: put this back after logging and popup refactor
     self.showPopUp(
         f"{self.ytube.videoTitle} - has been downloaded successfully to:\
         \n{os.path.abspath(location)}")
     """
+
+    
 
 
 app = QtWidgets.QApplication(sys.argv)
