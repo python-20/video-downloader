@@ -2,6 +2,10 @@ import logging
 import os
 
 
+DEFAULT_DIRECTORY = "./downloads"
+APP_NAME = "Video Downloader"
+
+
 class Helpers:
     """
     Class used for auxiliary functions non related to core functionality of the application
@@ -34,3 +38,6 @@ class Helpers:
         logger.addHandler(infoLogscreen)
 
         return logger
+
+
+logger = Helpers.logging_setup("logs/", APP_NAME)
