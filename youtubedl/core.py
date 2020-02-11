@@ -97,8 +97,6 @@ class YouTubeVideo(Video):
             self.logger.error(f"General Error Caught: {exceptionName}")
             self.logger.error(f"{errorMessage}")
             self.error = f"{exceptionName}:\n{errorMessage}"
-        '''finally:
-            self.logger.error(f"")'''
 
     @property
     def videoId(self):
