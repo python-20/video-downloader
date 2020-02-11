@@ -38,3 +38,6 @@ class Helpers:
         logger.addHandler(infoLogscreen)
 
         return logger
+
+
+logger = Helpers.logging_setup("logs/", APP_NAME)

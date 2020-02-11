@@ -1,10 +1,9 @@
 import pytube
 
-# from helpers import Helpers
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError, VideoUnavailable
 
-from loggers import logger
+from helpers import logger
 
 # https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
@@ -25,7 +24,6 @@ class Video:
         """
         self.url = url
         self.progress_callback = progress_callback
-        # self.logger = Helpers.logging_setup("logs/", "Video Downloader")
 
     @property
     def videoId(self):

@@ -7,13 +7,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
-# from core import getVideoThumbnail
 from core import YouTubeVideo
-from helpers import APP_NAME, DEFAULT_DIRECTORY
-
-
-# DEFAULT_DIRECTORY = './downloads'
-# APP_NAME = "Video Downloader"
+from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -21,7 +16,6 @@ class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         self.appName = APP_NAME
-        # self.logger = Helpers.logging_setup("logs/", APP_NAME)
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -69,12 +63,6 @@ class Ui(QtWidgets.QMainWindow):
         pixmap = pixmap.scaled(
             230, 230, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.labelThumbnail.setPixmap(pixmap)
-
-        # debug information
-        # self.logger.info(f"URL: {self.ytube.url}")
-        # self.logger.info(f"Video Title: {self.ytube.videoTitle}")
-        # self.logger.info(
-        #     f"Video Thumbnail: {self.ytube.videoThumbnail}")
 
     def getSaveLocation(self):
         """ Get user selected directory when the get location button is clicked.
@@ -145,7 +133,6 @@ class Ui(QtWidgets.QMainWindow):
             \n{os.path.abspath(location)}")
 
 
-# logger = Helpers.logging_setup("logs/", APP_NAME)
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
 app.exec_()
