@@ -159,6 +159,10 @@ class Ui(QtWidgets.QMainWindow):
         if self.ytube is not None:
             self.ytube.download(location=self.user_directory, itag=itag)
 
+        self.showPopUp(
+            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
+        \n{os.path.abspath(self.user_directory)}")
+
     def showPopUp(self, message):
         """ Show pop up message
 
@@ -178,13 +182,6 @@ class Ui(QtWidgets.QMainWindow):
         file_size = stream.filesize
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
-
-    """
-    TODO: put this back after logging and popup refactor
-    self.showPopUp(
-        f"{self.ytube.videoTitle} - has been downloaded successfully to:\
-        \n{os.path.abspath(location)}")
-    """
 
 
 app = QtWidgets.QApplication(sys.argv)

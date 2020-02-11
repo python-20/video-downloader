@@ -171,7 +171,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Download Loation:</string>
+     <string>Download Location:</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBoxQuality">
