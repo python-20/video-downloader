@@ -3,7 +3,7 @@ import pytube
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError, VideoUnavailable
 
-from helpers import logger
+from helpers import DEFAULT_DIRECTORY, logger
 
 # https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
 
@@ -138,7 +138,7 @@ class YouTubeVideo(Video):
         if not self.error:
             return self.yt.streams.all()
 
-    def download(self, location='./downloads', quality=None):
+    def download(self, location=DEFAULT_DIRECTORY, quality=None):
         """ Download the video. Default save location is './downloads'
 
         Override the same method in the Video class.
