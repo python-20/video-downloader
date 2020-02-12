@@ -35,5 +35,5 @@ def logging_setup(logging_directory, appName=APP_NAME):
 
     return logger
 
-
+  
 logger = logging_setup("logs/")

@@ -8,7 +8,6 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
-
 from core import YouTubeVideo
 from helpers import logger, APP_NAME, DEFAULT_DIRECTORY
 
@@ -87,9 +86,44 @@ class Ui(QtWidgets.QMainWindow):
         # self.logger.info(f"Video Title: {self.ytube.videoTitle}")
         # self.logger.info(
         #     f"Video Thumbnail: {self.ytube.videoThumbnail}")
-
         final_time = round(time.time() - start_time)
         logger.info(f"It took {final_time}s to get the data")
+
+    def populateComboBox(self):
+        """ Populate stream quality combobox (comboBoxQuality)
+
+        linked to video (checkBoxVideo) and audio (checkBoxAudio) checkbox state change
+
+        Args:
+            None
+
+        """
+        try:
+            self.comboBoxQuality.clear()
+
+            # show video streams if video check box is checked
+            if self.checkBoxVideo.isChecked():
+                streams = self.ytube.progressiveVideoStreams
+                for stream in streams:
+                    if stream.resolution is not None:
+                        self.comboBoxQuality.addItem(
+                            f"{stream.resolution} - {stream.mime_type}", stream.itag)
+
+            # show audio streams if audio check box is checked
+            if self.checkBoxAudio.isChecked():
+                streams = self.ytube.audioStreams
+                for stream in streams:
+                    self.comboBoxQuality.addItem(
+                        f"{stream.abr} - {stream.mime_type}", stream.itag)
+
+            # nothing is selected
+            if not self.checkBoxVideo.isChecked() and not self.checkBoxAudio.isChecked():
+                self.comboBoxQuality.addItem("== No Selection ==", None)
+
+        # ytube (YouTubeVideo Class) not defined
+        except AttributeError:
+            pass
+
 
     def populateComboBox(self):
         """ Populate stream quality combobox (comboBoxQuality)
@@ -172,7 +206,7 @@ class Ui(QtWidgets.QMainWindow):
         logger.info(f"It took {final_time}s to download the video")
         self.showPopUp(
             f"{self.ytube.videoTitle} - has been downloaded successfully to:\
-            \n{os.path.abspath(location)}")
+            \n{os.path.abspath(self.user_directory)}")
 
     def showPopUp(self, message):
         """ Show pop up message

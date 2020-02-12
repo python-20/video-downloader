@@ -23,7 +23,6 @@ class Video:
         """
         self.url = url
         self.progress_callback = progress_callback
-        # self.logger = Helpers.logging_setup("logs/", "Video Downloader")
 
     @property
     def videoId(self):
@@ -182,7 +181,7 @@ class YouTubeVideo(Video):
         """
         return self.yt.streams.filter(progressive=True).all()
 
-    def download(self, location='./downloads', itag=None):
+    def download(self, location=DEFAULT_DIRECTORY, itag=None):
         """ Download the video. Default save location is './downloads'
 
         Override the same method in the Video class.
