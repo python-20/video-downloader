@@ -66,8 +66,7 @@ class Video:
 
 
 class YouTubeVideo(Video):
-    """ Container for the YouTube video data.
-    """
+    """ Container for the YouTube video data."""
 
     def __init__(self, url, progress_callback=None):
         """ Construct the YouTubeVideo object.
@@ -75,6 +74,7 @@ class YouTubeVideo(Video):
         args:
             url: The URL of a YouTube video
             progress_callback: The name of the callback function to be called
+
         """
         super().__init__(url, progress_callback)
         self.error = False
@@ -88,7 +88,8 @@ class YouTubeVideo(Video):
             logger.error(f"Inputted link \"{url}\" is not a valid URL")
             self.error = f"{url} is an invalid URL"
         except VideoUnavailable:
-            # Catches a VideoUnavailable Error if pytube cannot process the video
+            # Catches a VideoUnavailable Error if pytube cannot
+            # process the video
             logger.error(f"Caught error: VideoUnavailable")
             logger.error(f"Inputted link \"{url}\" does not exist")
             self.error = f"{url} does not exist"
