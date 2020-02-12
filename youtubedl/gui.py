@@ -25,16 +25,21 @@ class Ui(QtWidgets.QMainWindow):
 
         # connect buttons and functions
         self.btnOK.clicked.connect(self.enterURL)
+        self.lineEditURL.returnPressed.connect(self.enterURL)
         self.btnDownload.clicked.connect(self.download_button)
         self.btnDownloadLocation.clicked.connect(self.getSaveLocation)
         self.lineEditDownloadLocation.returnPressed.connect(
             self.onSaveLocationChange)
+        self.checkBoxVideo.stateChanged.connect(self.populateComboBox)
+        self.checkBoxAudio.stateChanged.connect(self.populateComboBox)
 
-        # initialize progressbar
-        self.progressBar.setValue(0)
+        # initialize controls
+        self.progressBar.setValue(0)  # progress bar value to 0
+        self.checkBoxVideo.setChecked(True)
+        self.btnDownload.setEnabled(False)
 
         # test URL
-        self.lineEditURL.setText("https://www.youtube.com/watch?v=9bZkp7q19f0")
+        self.lineEditURL.setText("https://www.youtube.com/watch?v=7BgcG_l9J0A")
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
@@ -64,8 +69,49 @@ class Ui(QtWidgets.QMainWindow):
             230, 230, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.labelThumbnail.setPixmap(pixmap)
 
+        # Populate combo box
+        self.populateComboBox()
+
+        # enable download button
+        self.btnDownload.setEnabled(True)
+
+    def populateComboBox(self):
+        """ Populate stream quality combobox (comboBoxQuality)
+
+        linked to video (checkBoxVideo) and audio (checkBoxAudio) checkbox state change
+
+        Args:
+            None
+
+        """
+        try:
+            self.comboBoxQuality.clear()
+
+            # show video streams if video check box is checked
+            if self.checkBoxVideo.isChecked():
+                streams = self.ytube.progressiveVideoStreams
+                for stream in streams:
+                    if stream.resolution is not None:
+                        self.comboBoxQuality.addItem(
+                            f"{stream.resolution} - {stream.mime_type}", stream.itag)
+
+            # show audio streams if audio check box is checked
+            if self.checkBoxAudio.isChecked():
+                streams = self.ytube.audioStreams
+                for stream in streams:
+                    self.comboBoxQuality.addItem(
+                        f"{stream.abr} - {stream.mime_type}", stream.itag)
+
+            # nothing is selected
+            if not self.checkBoxVideo.isChecked() and not self.checkBoxAudio.isChecked():
+                self.comboBoxQuality.addItem("== No Selection ==", None)
+
+        # ytube (YouTubeVideo Class) not defined
+        except AttributeError:
+            pass
+
     def getSaveLocation(self):
-        """ Get user selected directory when the get location button is clicked.
+        """ Get user selected directory when the download button is clicked.
         """
         self.user_directory = str(QFileDialog.getExistingDirectory(
             self, "Select Directory"))
@@ -74,7 +120,7 @@ class Ui(QtWidgets.QMainWindow):
             f"function: getSaveLocation - directory: {self.user_directory}")
 
     def onSaveLocationChange(self):
-        """ Get save location by user text input
+        """ Get save location by user text input (manual location input)
         """
         entered_directory = self.lineEditDownloadLocation.text()
         # check if directory exist
@@ -87,10 +133,24 @@ class Ui(QtWidgets.QMainWindow):
             f"function: onSaveLocationChange - directory: {self.user_directory}")
 
     def download_button(self):
-        """ When download button is pressed
         """
+        When download button is pressed
+        """
+        # get selected stream quality (itag)
+
+        logger.info(
+            f"itag of quality selected is "
+            f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
+
+        itag = self.comboBoxQuality.itemData(
+            self.comboBoxQuality.currentIndex())
+
         if self.ytube is not None:
-            self.download(location=self.user_directory)
+            self.ytube.download(location=self.user_directory, itag=itag)
+
+        self.showPopUp(
+            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
+        \n{os.path.abspath(self.user_directory)}")
 
     def showPopUp(self, message):
         """ Show pop up message
@@ -111,26 +171,6 @@ class Ui(QtWidgets.QMainWindow):
         file_size = stream.filesize
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
-
-    def download(self, location=DEFAULT_DIRECTORY, quality=None):
-        """ Download the video. Default save location is './downloads'
-
-        Args:
-            location: The location to save the video
-            quality: The stream quality of the video to be downloaded
-
-        """
-        # TODO: support manual directory entry
-
-        logger.info(f"location: {location}")
-        logger.info(f"quality: {quality}")
-
-        if quality is None:
-            self.ytube.download(location=location)
-
-        self.showPopUp(
-            f"{self.ytube.videoTitle} - has been downloaded successfully to:\
-            \n{os.path.abspath(location)}")
 
 
 app = QtWidgets.QApplication(sys.argv)
