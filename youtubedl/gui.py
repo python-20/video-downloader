@@ -75,12 +75,6 @@ class Ui(QtWidgets.QMainWindow):
         # enable download button
         self.btnDownload.setEnabled(True)
 
-        # debug information
-        self.logger.info(f"URL: {self.ytube.url}")
-        self.logger.info(f"Video Title: {self.ytube.videoTitle}")
-        self.logger.info(
-            f"Video Thumbnail: {self.ytube.videoThumbnail}")
-
     def populateComboBox(self):
         """ Populate stream quality combobox (comboBoxQuality)
 
@@ -144,7 +138,7 @@ class Ui(QtWidgets.QMainWindow):
         """
         # get selected stream quality (itag)
 
-        self.logger.info(
+        logger.info(
             f"itag of quality selected is "
             f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
 
