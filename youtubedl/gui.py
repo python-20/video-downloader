@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import urllib
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
@@ -8,7 +9,7 @@ from PyQt5.QtCore import Qt
 from pytube import YouTube
 
 from core import YouTubeVideo
-from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
+from helpers import logger, APP_NAME, DEFAULT_DIRECTORY
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -16,6 +17,7 @@ class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         self.appName = APP_NAME
+
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
@@ -51,6 +53,8 @@ class Ui(QtWidgets.QMainWindow):
         Use the given URL to retrieve video information and process it
         """
 
+        start_time = time.time()
+
         link = self.lineEditURL.text()
         self.ytube = YouTubeVideo(
             link, progress_callback=self.download_progress)
@@ -74,6 +78,52 @@ class Ui(QtWidgets.QMainWindow):
 
         # enable download button
         self.btnDownload.setEnabled(True)
+
+        # TODO get the rest of useful data
+
+        # debug information
+        # self.logger.info(f"URL: {self.ytube.url}")
+        # self.logger.info(f"Video Title: {self.ytube.videoTitle}")
+        # self.logger.info(
+        #     f"Video Thumbnail: {self.ytube.videoThumbnail}")
+        final_time = round(time.time() - start_time)
+        logger.info(f"It took {final_time}s to get the data")
+
+    def populateComboBox(self):
+        """ Populate stream quality combobox (comboBoxQuality)
+
+        linked to video (checkBoxVideo) and audio (checkBoxAudio) checkbox state change
+
+        Args:
+            None
+
+        """
+        try:
+            self.comboBoxQuality.clear()
+
+            # show video streams if video check box is checked
+            if self.checkBoxVideo.isChecked():
+                streams = self.ytube.progressiveVideoStreams
+                for stream in streams:
+                    if stream.resolution is not None:
+                        self.comboBoxQuality.addItem(
+                            f"{stream.resolution} - {stream.mime_type}", stream.itag)
+
+            # show audio streams if audio check box is checked
+            if self.checkBoxAudio.isChecked():
+                streams = self.ytube.audioStreams
+                for stream in streams:
+                    self.comboBoxQuality.addItem(
+                        f"{stream.abr} - {stream.mime_type}", stream.itag)
+
+            # nothing is selected
+            if not self.checkBoxVideo.isChecked() and not self.checkBoxAudio.isChecked():
+                self.comboBoxQuality.addItem("== No Selection ==", None)
+
+        # ytube (YouTubeVideo Class) not defined
+        except AttributeError:
+            pass
+
 
     def populateComboBox(self):
         """ Populate stream quality combobox (comboBoxQuality)
@@ -138,6 +188,9 @@ class Ui(QtWidgets.QMainWindow):
         """
         # get selected stream quality (itag)
 
+        # Timer for downlad log
+        start_time = time.time()
+
         logger.info(
             f"itag of quality selected is "
             f"{self.comboBoxQuality.itemData(self.comboBoxQuality.currentIndex())}")
@@ -148,9 +201,12 @@ class Ui(QtWidgets.QMainWindow):
         if self.ytube is not None:
             self.ytube.download(location=self.user_directory, itag=itag)
 
+        # Logging & Popup
+        final_time = round(time.time() - start_time)
+        logger.info(f"It took {final_time}s to download the video")
         self.showPopUp(
             f"{self.ytube.videoTitle} - has been downloaded successfully to:\
-        \n{os.path.abspath(self.user_directory)}")
+            \n{os.path.abspath(self.user_directory)}")
 
     def showPopUp(self, message):
         """ Show pop up message
@@ -162,7 +218,7 @@ class Ui(QtWidgets.QMainWindow):
         msg = QMessageBox()
         msg.setWindowTitle(self.appName)
         msg.setText(message)
-        x = msg.exec_()
+        msg.exec_()
 
     def download_progress(self, stream=None, chunk=None, file_handle=None, bytes_remaining=None):
         """
@@ -173,6 +229,7 @@ class Ui(QtWidgets.QMainWindow):
             round((1 - bytes_remaining / file_size) * 100, 3))
 
 
-app = QtWidgets.QApplication(sys.argv)
-window = Ui()
-app.exec_()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = Ui()
+    app.exec_()

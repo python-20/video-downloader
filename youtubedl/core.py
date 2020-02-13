@@ -4,9 +4,7 @@ import os
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError, VideoUnavailable
 
-from helpers import DEFAULT_DIRECTORY, logger
-
-# https://python-pytube3.readthedocs.io/en/latest/user/quickstart.html
+from helpers import logger, APP_NAME
 
 
 class Video:
@@ -93,6 +91,14 @@ class YouTubeVideo(Video):
             logger.error(f"Caught error: VideoUnavailable")
             logger.error(f"Inputted link \"{url}\" does not exist")
             self.error = f"{url} does not exist"
+        except Exception as errorMessage:
+            # Catches any other unexpected error
+            exceptionName = errorMessage.__class__.__name__
+            logger.error(f"General Error Caught: {exceptionName}")
+            logger.error(f"{errorMessage}")
+            self.error = f"{exceptionName}:\n{errorMessage}"
+        '''finally:
+            self.logger.error(f"")'''
 
     @property
     def videoId(self):
@@ -202,3 +208,9 @@ class YouTubeVideo(Video):
                 # get absolute path
                 os.path.abspath(location)
                 """
+
+
+if __name__ == "__main__":
+    video = YouTubeVideo("https://www.youtube.com/watch?v=7BgcG_l9J0A")
+    streams = video.allVideoStreams()
+    print(streams)
