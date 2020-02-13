@@ -7,8 +7,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
-from core import YouTubeVideo
-from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
+from youtubedl.core import YouTubeVideo
+from youtubedl.helpers import APP_NAME, DEFAULT_DIRECTORY, logger
 
 
 class Ui(QtWidgets.QMainWindow):
