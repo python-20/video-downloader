@@ -1,6 +1,6 @@
 import unittest
 
-import youtubedl.core as core
+import core
 
 # Run tests with python -m unittest path/to/tests.py
 
@@ -17,4 +17,4 @@ class TestVideo(unittest.TestCase):
     def testVideoMethods(self):
         with self.assertRaises(NotImplementedError) as error:
             self.video.videoId
-        self.assertEqual(error.expected, NotImplementedError)
+        self.assertEqual(error.exception, NotImplementedError)
