@@ -1,4 +1,4 @@
-# Video Downloader [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)
+# Video Downloader [![Python 3.7x](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-376/)[(https://travis-ci.com/python-20/video-downloader.svg?branch=master)]
 
 Video downloader is a desktop application made with Python. The GUI is built using [PyQT5](https://pypi.org/project/PyQt5/). It allows downloading of Youtube Videos and Playlists to the user's system.
 
