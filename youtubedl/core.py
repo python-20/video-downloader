@@ -23,7 +23,7 @@ class Video:
             url: The URL of the video
             progress_callback: The name of the callback function to be called
         """
-        self.url = url
+        self.url = str(url)
         self.progress_callback = progress_callback
 
     @property
