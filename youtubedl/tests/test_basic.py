@@ -66,12 +66,12 @@ class TestYouTubeVideo(unittest.TestCase):
         self.video = core.Video(
             "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.methods = [m for m in dir(self.video) if not m.startswith('__')
-            and m not in self.video.__dict__.keys()]
+                        and m not in self.video.__dict__.keys()]
 
     def testYouTubeVideoInit(self):
         """Test the base attributes created with the YouTubeVideo object."""
         self.assertEqual(self.video.url,
-            "https://www.youtube.com/watch?v=9bZkp7q19f0")
+                         "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.assertEqual(self.video.progress_callback, None)
 
     def testYouTubeVideoBaseMethods(self):
