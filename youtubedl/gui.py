@@ -1,6 +1,7 @@
 import sys
 import os
 import urllib
+import PyQt5
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
