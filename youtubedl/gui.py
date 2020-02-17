@@ -17,7 +17,7 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         self.appName = APP_NAME
         appPath = (os.path.dirname(os.path.realpath(__file__)))
-        uic.loadUi(f'{appPath}/ui/qt.ui', self)
+        uic.loadUi(f'{appPath}/ui/alternate.ui', self)
 
         # set window icon
         self.setWindowIcon(QtGui.QIcon(
