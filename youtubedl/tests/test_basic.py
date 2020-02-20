@@ -63,7 +63,7 @@ class TestYouTubeVideo(unittest.TestCase):
 
     def setUp(self):
         """Create a YouTubeVideo instance and a list of its available methods."""
-        self.video = core.Video(
+        self.video = core.YouTubeVideo(
             "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.methods = [m for m in dir(self.video) if not m.startswith('__')
                         and m not in self.video.__dict__.keys()]
@@ -74,6 +74,15 @@ class TestYouTubeVideo(unittest.TestCase):
                          "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.assertEqual(self.video.progress_callback, None)
 
+    @unittest.skip("Skipping for now, until the desired behaviour is defined.")
+    def testYouTubeVideoInitExceptions(self):
+        """Test occurrence of exception conditions on YouTubeVideo __init__."""
+        # TODO: Strange behaviour. Accepts any URL, even malformed?
+        # Maybe move this to test_advanced.py? It takes some time to generate
+        # the object. I think it's better to separate this one from other tests.
+        with self.assertRaises(core.RegexMatchError):
+            video = core.YouTubeVideo("https://www.youtube.com/match?v=9bZkp7q19f0")
+
     def testYouTubeVideoBaseMethods(self):
         """Test if the YouTubeVideo class implements all the base Video methods.
 
@@ -81,3 +90,8 @@ class TestYouTubeVideo(unittest.TestCase):
         """
         for m in videoBaseMethods:
             self.assertTrue(m in self.methods)
+
+    def testYouTubeVideoId(self):
+        """Test the videoId attribute from YouTubeVideo."""
+        self.assertIs(type(self.video.videoId), str)
+        self.assertEqual(self.video.videoId, "9bZkp7q19f0")
