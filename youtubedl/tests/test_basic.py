@@ -1,5 +1,7 @@
 import unittest
 
+import unittest.mock
+
 from .context import core
 
 # Run tests with python -m unittest tests/test_basic.py
@@ -63,8 +65,8 @@ class TestYouTubeVideo(unittest.TestCase):
 
     def setUp(self):
         """Create a YouTubeVideo instance and a list of its available methods."""
-        self.video = core.YouTubeVideo(
-            "https://www.youtube.com/watch?v=9bZkp7q19f0")
+        mock = unittest.mock.Mock(spec_set=core.YouTubeVideo)
+        self.video = mock("https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.methods = [m for m in dir(self.video) if not m.startswith('__')
                         and m not in self.video.__dict__.keys()]
 
