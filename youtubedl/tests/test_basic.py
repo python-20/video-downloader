@@ -65,8 +65,8 @@ class TestYouTubeVideo(unittest.TestCase):
 
     def setUp(self):
         """Create a YouTubeVideo instance and a list of its available methods."""
-        mock = unittest.mock.Mock(spec_set=core.YouTubeVideo)
-        self.video = mock("https://www.youtube.com/watch?v=9bZkp7q19f0")
+        self.video = core.Video(
+            "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.methods = [m for m in dir(self.video) if not m.startswith('__')
                         and m not in self.video.__dict__.keys()]
 
@@ -92,8 +92,3 @@ class TestYouTubeVideo(unittest.TestCase):
         """
         for m in videoBaseMethods:
             self.assertTrue(m in self.methods)
-
-    def testYouTubeVideoId(self):
-        """Test the videoId attribute from YouTubeVideo."""
-        self.assertIs(type(self.video.videoId), str)
-        self.assertEqual(self.video.videoId, "9bZkp7q19f0")
