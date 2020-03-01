@@ -90,7 +90,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditURL"/>
+          <widget class="QLineEdit" name="lineEditURL">
+           <property name="placeholderText">
+            <string>Enter YouTube video URL here.</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnOK">
