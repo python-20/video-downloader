@@ -1,12 +1,8 @@
 import unittest
 
-<<<<<<< Updated upstream
-from .context import core
-=======
 import unittest.mock
 
 from .context import core, checker
->>>>>>> Stashed changes
 
 # Run tests with python -m unittest tests/test_basic.py
 
