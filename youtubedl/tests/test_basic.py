@@ -1,6 +1,12 @@
 import unittest
 
+<<<<<<< Updated upstream
 from .context import core
+=======
+import unittest.mock
+
+from .context import core, checker
+>>>>>>> Stashed changes
 
 # Run tests with python -m unittest tests/test_basic.py
 
@@ -11,6 +17,26 @@ videoBaseMethods = frozenset(['allVideoStreams', 'download', 'videoId',
     'videoThumbnail', 'videoTitle'])
 videoBaseAttributes = frozenset(['url', 'progress_callback'])
 
+
+class TestChecker(unittest.TestCase):
+    """Tests for the URL checker."""
+
+    def setUp(self):
+        self.urls = [
+            '',
+            '0'
+            'x',
+            'a.b',
+            'A.com',
+            'https://A.com',
+            'https://www.youtube.com/watch?v=d-o3eB9sfls',
+            'www.youtube.com/watch?v=d-o3eB9sfls',
+            'www.youtuba.com/watch?v=d-o3eB9sfls',
+            'www.youtube.com/match?v=d-o3eB9sfls',
+            ]
+
+    def testPatchUrl(self):
+        pass
 
 class TestVideo(unittest.TestCase):
     """Tests for the base class Video."""
