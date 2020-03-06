@@ -29,7 +29,7 @@ class TestChecker(unittest.TestCase):
             'www.youtube.com/watch?v=d-o3eB9sfls',
             'www.youtuba.com/watch?v=d-o3eB9sfls',
             'www.youtube.com/match?v=d-o3eB9sfls',
-            ]
+        ]
 
     def testPatchUrl(self):
         pass
