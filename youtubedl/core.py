@@ -1,7 +1,7 @@
 import pytube
 import os
 
-from pytube import YouTube
+from pytube import YouTube, Playlist
 from pytube.exceptions import RegexMatchError, VideoUnavailable
 
 from helpers import DEFAULT_DIRECTORY, logger

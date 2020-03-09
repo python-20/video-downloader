@@ -111,7 +111,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Video/Playlist URL:</string>
+                <string>Video URL:</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::PlainText</enum>
@@ -279,7 +279,7 @@
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>img/folder.png</normaloff>C:/Users/webma/.designer/backup/img/folder.png</iconset>
+                 <normaloff>img/folder.png</normaloff>img/folder.png</iconset>
                </property>
               </widget>
              </item>
@@ -451,6 +451,59 @@
        <attribute name="title">
         <string>Playlist</string>
        </attribute>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>661</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="labelPlaylistURL">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>160</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Playlist URL:</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPlaylistURL"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnOK_playlist">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>OK</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </widget>

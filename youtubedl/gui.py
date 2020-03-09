@@ -5,7 +5,6 @@ from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
-from pytube import YouTube
 
 from core import YouTubeVideo
 from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
@@ -23,7 +22,7 @@ class Ui(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon(
             f'{appPath}/ui/img/title-bar-icon.png'))
 
-        # connect buttons and functions
+        # connect buttons and functions - youtube single video
         self.btnOK.clicked.connect(self.enterURL)
         self.lineEditURL.returnPressed.connect(self.enterURL)
         self.btnDownload.clicked.connect(self.download_button)
@@ -33,6 +32,9 @@ class Ui(QtWidgets.QMainWindow):
         self.checkBoxVideo.stateChanged.connect(self.populateComboBox)
         self.checkBoxAudio.stateChanged.connect(self.populateComboBox)
 
+        # connect buttons and functions - youtube playlist
+        self.btnOK_playlist.clicked.connect(self.enterPlaylistURL)
+
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
         self.checkBoxVideo.setChecked(True)
@@ -40,11 +42,15 @@ class Ui(QtWidgets.QMainWindow):
 
         # test URL
         self.lineEditURL.setText("https://www.youtube.com/watch?v=7BgcG_l9J0A")
+        self.lineEditPlaylistURL.setText(
+            "https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p")
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
 
         self.show()
+
+    ########## youtube single video tab ###################
 
     def enterURL(self):
         """ When OK button is pressed.
@@ -171,6 +177,14 @@ class Ui(QtWidgets.QMainWindow):
         file_size = stream.filesize
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
+
+    ########## youtube playlist tab ###################
+
+    def enterPlaylistURL(self):
+        """ Execute when OK button is pressed in the youtube playlist tab.
+        Use the given URL to retrieve video information and process it
+        """
+        pass
 
 
 app = QtWidgets.QApplication(sys.argv)
