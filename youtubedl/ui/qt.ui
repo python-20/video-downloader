@@ -58,7 +58,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -503,6 +503,16 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QListWidget" name="listWidgetPlaylistVideos">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>651</width>
+          <height>281</height>
+         </rect>
+        </property>
        </widget>
       </widget>
      </widget>

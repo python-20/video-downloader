@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
-from core import YouTubeVideo
+from core import YouTubeVideo, YouTubePlaylist
 from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
 
 
@@ -184,7 +184,13 @@ class Ui(QtWidgets.QMainWindow):
         """ Execute when OK button is pressed in the youtube playlist tab.
         Use the given URL to retrieve video information and process it
         """
-        pass
+        self.youtube_pl = YouTubePlaylist(self.lineEditPlaylistURL.text())
+        if self.youtube_pl.error:
+            self.showPopUp(self.youtube_pl.error)
+            return
+
+        self.listWidgetPlaylistVideos.addItems(
+            self.youtube_pl.get_youtube_playlist_videos())
 
 
 app = QtWidgets.QApplication(sys.argv)

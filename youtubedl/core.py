@@ -209,3 +209,30 @@ class YouTubeVideo(Video):
                 # get absolute path
                 os.path.abspath(location)
                 """
+
+
+class YouTubePlaylist():
+    def __init__(self, url):
+        """ Construct the YouTube playlist object.
+
+        args:
+            url: The URL of a YouTube playlist            
+
+        """
+        self.error = False
+        try:
+            self.playlist = Playlist(url)
+        except Exception as errorMessage:
+            self.error = True
+            # Catches any other unexpected error
+            exceptionName = errorMessage.__class__.__name__
+            self.logger.error(f"General Error Caught: {exceptionName}")
+            self.logger.error(f"{errorMessage}")
+            self.error = f"{exceptionName}:\n{errorMessage}"
+
+    def get_youtube_playlist_videos(self):
+        if not self.error:
+            # return video urls
+            return [video for video in self.playlist]
+        else:
+            return None
