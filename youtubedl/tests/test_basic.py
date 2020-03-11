@@ -42,7 +42,6 @@ class TestVideo(unittest.TestCase):
     def testWhichAreTheVideoMethods(self):
         """Test if the methods in Video are only those
            specified in the interface.
-
         To include a method in Video, insert the method name in videoBaseMethods
         """
         for m in videoBaseMethods:
@@ -50,7 +49,6 @@ class TestVideo(unittest.TestCase):
 
     def testVideoMethodsRaise(self):
         """Test if all methods in Video are 'abstract'.
-
         All Video methods must raise NotImplementedError.
         """
         with self.assertRaises(NotImplementedError):
@@ -76,7 +74,6 @@ class TestYouTubeVideo(unittest.TestCase):
 
     def testYouTubeVideoBaseMethods(self):
         """Test if the YouTubeVideo class implements all the base Video methods.
-
         To include a method in YouTubeVideo, insert the method name in Video.
         """
         for m in videoBaseMethods:
