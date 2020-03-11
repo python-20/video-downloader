@@ -1,7 +1,5 @@
 import unittest
 
-import unittest.mock
-
 from .context import core
 
 # Run tests with python -m unittest tests/test_basic.py
@@ -44,7 +42,6 @@ class TestVideo(unittest.TestCase):
     def testWhichAreTheVideoMethods(self):
         """Test if the methods in Video are only those
            specified in the interface.
-
         To include a method in Video, insert the method name in videoBaseMethods
         """
         for m in videoBaseMethods:
@@ -52,7 +49,6 @@ class TestVideo(unittest.TestCase):
 
     def testVideoMethodsRaise(self):
         """Test if all methods in Video are 'abstract'.
-
         All Video methods must raise NotImplementedError.
         """
         with self.assertRaises(NotImplementedError):
@@ -76,18 +72,8 @@ class TestYouTubeVideo(unittest.TestCase):
                          "https://www.youtube.com/watch?v=9bZkp7q19f0")
         self.assertEqual(self.video.progress_callback, None)
 
-    @unittest.skip("Skipping for now, until the desired behaviour is defined.")
-    def testYouTubeVideoInitExceptions(self):
-        """Test occurrence of exception conditions on YouTubeVideo __init__."""
-        # TODO: Strange behaviour. Accepts any URL, even malformed?
-        # Maybe move this to test_advanced.py? It takes some time to generate
-        # the object. I think it's better to separate this one from other tests.
-        with self.assertRaises(core.RegexMatchError):
-            video = core.YouTubeVideo("https://www.youtube.com/match?v=9bZkp7q19f0")
-
     def testYouTubeVideoBaseMethods(self):
         """Test if the YouTubeVideo class implements all the base Video methods.
-
         To include a method in YouTubeVideo, insert the method name in Video.
         """
         for m in videoBaseMethods:
