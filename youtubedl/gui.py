@@ -167,7 +167,7 @@ class Ui(QtWidgets.QMainWindow):
         msg.setText(message)
         msg.exec_()
 
-    def download_progress(self, stream=None, chunk=None, file_handle=None, bytes_remaining=None):
+    def download_progress(self, stream=None, chunk=None, bytes_remaining=None):
         """
         Updates progress bar on download_progress callback
         """
