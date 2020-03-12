@@ -1,7 +1,7 @@
 import sys
 import os
 import urllib
-from PyQt5 import QtGui, QtWidgets, uic
+from PyQt5 import QtGui, QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
@@ -189,8 +189,14 @@ class Ui(QtWidgets.QMainWindow):
             self.showPopUp(self.youtube_pl.error)
             return
 
-        self.listWidgetPlaylistVideos.addItems(
-            self.youtube_pl.get_youtube_playlist_videos())
+        for video in self.youtube_pl.get_youtube_playlist_videos():
+            item = QtWidgets.QListWidgetItem()
+            item.setText(video.videoTitle)
+            item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
+            item.setCheckState(QtCore.Qt.Checked)
+            self.listWidgetPlaylistVideos.addItem(item)
+        # self.listWidgetPlaylistVideos.addItems(
+        #    self.youtube_pl.get_youtube_playlist_videos())
 
 
 app = QtWidgets.QApplication(sys.argv)

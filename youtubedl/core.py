@@ -233,6 +233,10 @@ class YouTubePlaylist():
     def get_youtube_playlist_videos(self):
         if not self.error:
             # return video urls
-            return [video for video in self.playlist]
+            # return [video for video in self.playlist]
+
+            # return YouTube objects
+            return [YouTubeVideo(video) for video in self.playlist]
+
         else:
             return None
