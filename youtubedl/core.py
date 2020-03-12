@@ -180,7 +180,7 @@ class YouTubeVideo(Video):
         A list of progressive stream objects consisting of the available stream qualities for the video
 
         """
-        return self.yt.streams.filter(progressive=True).all()
+        return self.yt.streams.filter(progressive=True)
 
     def download(self, location=DEFAULT_DIRECTORY, itag=None):
         """ Download the video. Default save location is './downloads'

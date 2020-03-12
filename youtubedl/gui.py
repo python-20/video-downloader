@@ -2,13 +2,13 @@ import sys
 import os
 import urllib
 from PyQt5 import QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
+from PyQt5.QtGui import QPixmap, QKeySequence
 from PyQt5.QtCore import Qt
 from pytube import YouTube
 
 from core import YouTubeVideo
-from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
+from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -39,7 +39,10 @@ class Ui(QtWidgets.QMainWindow):
         self.btnDownload.setEnabled(False)
 
         # test URL
-        self.lineEditURL.setText("https://www.youtube.com/watch?v=7BgcG_l9J0A")
+        shortcut = QShortcut(QKeySequence("Ctrl+Shift+U"), self.lineEditURL)
+        shortcut.activated.connect(
+            lambda: self.lineEditURL.setText(DEFAULT_URL))
+        shortcut.setEnabled(True)
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
@@ -164,7 +167,7 @@ class Ui(QtWidgets.QMainWindow):
         msg.setText(message)
         msg.exec_()
 
-    def download_progress(self, stream=None, chunk=None, file_handle=None, bytes_remaining=None):
+    def download_progress(self, stream=None, chunk=None, bytes_remaining=None):
         """
         Updates progress bar on download_progress callback
         """
