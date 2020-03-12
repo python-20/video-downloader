@@ -236,6 +236,8 @@ class YouTubePlaylist():
             # return [video for video in self.playlist]
 
             # return YouTube objects
+            # TODO: move to playlist initialisation
+            # TODO: Show some sort of progress
             return [YouTubeVideo(video) for video in self.playlist]
 
         else:
