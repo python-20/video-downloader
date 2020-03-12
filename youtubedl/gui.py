@@ -188,13 +188,17 @@ class Ui(QtWidgets.QMainWindow):
         if self.youtube_pl.error:
             self.showPopUp(self.youtube_pl.error)
             return
-
-        for video in self.youtube_pl.get_youtube_playlist_videos():
+        for video in self.youtube_pl.gen_youtube_playlist_videos():
+            # doesn't work
+            # for n, video in self.youtube_pl.gen_youtube_playlist_videos():
+            # self.labelPlayListProgress.setText(
+            #    f"{n}/{self.youtube_pl.playlist_length}")
             item = QtWidgets.QListWidgetItem()
             item.setText(video.videoTitle)
             item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
             item.setCheckState(QtCore.Qt.Checked)
             self.listWidgetPlaylistVideos.addItem(item)
+
         # self.listWidgetPlaylistVideos.addItems(
         #    self.youtube_pl.get_youtube_playlist_videos())
 
