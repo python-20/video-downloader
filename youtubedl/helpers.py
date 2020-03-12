@@ -3,6 +3,7 @@ import os
 
 
 DEFAULT_DIRECTORY = "./downloads"
+DEFAULT_URL = "https://www.youtube.com/watch?v=7BgcG_l9J0A"
 APP_NAME = "Video Downloader"
 
 

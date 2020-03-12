@@ -1,13 +1,16 @@
 import sys
 import os
 import urllib
+
 from PyQt5 import QtGui, QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
+from PyQt5.QtGui import QPixmap, QKeySequence
+
 from PyQt5.QtCore import Qt
 
-from core import YouTubeVideo, YouTubePlaylist
-from helpers import APP_NAME, DEFAULT_DIRECTORY, logger
+
+from core import YouTubeVideo
+from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -41,9 +44,12 @@ class Ui(QtWidgets.QMainWindow):
         self.btnDownload.setEnabled(False)
 
         # test URL
-        self.lineEditURL.setText("https://www.youtube.com/watch?v=7BgcG_l9J0A")
-        self.lineEditPlaylistURL.setText(
-            "https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p")
+
+        shortcut = QShortcut(QKeySequence("Ctrl+Shift+U"), self.lineEditURL)
+        shortcut.activated.connect(
+            lambda: self.lineEditURL.setText(DEFAULT_URL))
+        shortcut.setEnabled(True)
+
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
