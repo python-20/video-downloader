@@ -8,6 +8,7 @@ from PyQt5.QtCore import Qt
 from pytube import YouTube
 
 from core import YouTubeVideo
+from checker import checkUrl
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
@@ -55,11 +56,16 @@ class Ui(QtWidgets.QMainWindow):
         """
 
         link = self.lineEditURL.text()
-        self.ytube = YouTubeVideo(
-            link, progress_callback=self.download_progress)
-        if self.ytube.error:
-            self.showPopUp(self.ytube.error)
+
+        if not checkUrl(link):
+            self.showPopUp('Invalid URL')
             return
+        else:
+            self.ytube = YouTubeVideo(
+                link, progress_callback=self.download_progress)
+            if self.ytube.error:
+                self.showPopUp(self.ytube.error)
+                return
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)
