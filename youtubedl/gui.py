@@ -8,7 +8,7 @@ from PyQt5.QtCore import Qt
 from pytube import YouTube
 
 from core import YouTubeVideo
-from checker import checkUrl
+from checker import checkUrl, updateTldList
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
@@ -33,6 +33,9 @@ class Ui(QtWidgets.QMainWindow):
             self.onSaveLocationChange)
         self.checkBoxVideo.stateChanged.connect(self.populateComboBox)
         self.checkBoxAudio.stateChanged.connect(self.populateComboBox)
+
+        # update the TLD list (for the URL checker)
+        updateTldList()
 
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0

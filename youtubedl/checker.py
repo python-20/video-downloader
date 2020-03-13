@@ -5,6 +5,8 @@ import tld
 from helpers import logger
 
 from tld.exceptions import TldBadUrl, TldDomainNotFound
+from tld.utils import update_tld_names
+
 
 def checkUrl(url):
     """Check validity of the URL."""
@@ -64,3 +66,6 @@ def checkService(url):
         return domain in services
     else:
         return False
+
+def updateTldList():
+    update_tld_names()
