@@ -9,7 +9,7 @@ from PyQt5.QtGui import QPixmap, QKeySequence
 from PyQt5.QtCore import Qt
 
 
-from core import YouTubeVideo
+from core import YouTubeVideo, YouTubePlaylist
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
@@ -44,12 +44,13 @@ class Ui(QtWidgets.QMainWindow):
         self.btnDownload.setEnabled(False)
 
         # test URL
+        self.lineEditPlaylistURL.setText(
+            "https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p")
 
         shortcut = QShortcut(QKeySequence("Ctrl+Shift+U"), self.lineEditURL)
         shortcut.activated.connect(
             lambda: self.lineEditURL.setText(DEFAULT_URL))
         shortcut.setEnabled(True)
-
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
@@ -194,16 +195,25 @@ class Ui(QtWidgets.QMainWindow):
         if self.youtube_pl.error:
             self.showPopUp(self.youtube_pl.error)
             return
-        for video in self.youtube_pl.gen_youtube_playlist_videos():
+        self.playlist_video_objects = []
+        n = 1
+        for video_url in self.youtube_pl.get_playlist_urls:
             # doesn't work
             # for n, video in self.youtube_pl.gen_youtube_playlist_videos():
             # self.labelPlayListProgress.setText(
             #    f"{n}/{self.youtube_pl.playlist_length}")
+            video_stream_object = YouTubeVideo(video_url)
+            self.playlist_video_objects.append(video_stream_object)
+
             item = QtWidgets.QListWidgetItem()
-            item.setText(video.videoTitle)
+            item.setText(video_stream_object.videoTitle)
             item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
             item.setCheckState(QtCore.Qt.Checked)
             self.listWidgetPlaylistVideos.addItem(item)
+
+            self.labelPlayListProgress.setText(print(
+                f"{n}/{self.youtube_pl.playlist_length}"))
+            n = n + 1
 
         # self.listWidgetPlaylistVideos.addItems(
         #    self.youtube_pl.get_youtube_playlist_videos())

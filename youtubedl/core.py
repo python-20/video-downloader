@@ -224,7 +224,7 @@ class YouTubePlaylist():
             self.playlist = Playlist(url)
             self.playlist_urls = [video for video in self.playlist]
             self.playlist_length = len(self.playlist_urls)
-            self.playlist_video_objects = self.gen_youtube_playlist_videos()
+            # self.playlist_video_objects = self.gen_youtube_playlist_videos()
         except Exception as errorMessage:
             self.error = True
             # Catches any other unexpected error
@@ -243,6 +243,18 @@ class YouTubePlaylist():
         """
         return self.playlist_length
 
+    @property
+    def get_playlist_urls(self):
+        """ Returns list of video urls in the playlist
+
+        args:
+            None            
+
+        """
+        return self.playlist_urls
+
+
+'''
     def gen_youtube_playlist_videos(self):
         # return YouTube objects
         n = 1
@@ -250,3 +262,4 @@ class YouTubePlaylist():
             yield YouTubeVideo(url)
             print(f"{n}/{self.playlist_length}")
             n = n + 1
+'''
