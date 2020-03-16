@@ -126,7 +126,7 @@
                <property name="placeholderText">
                 <string>Enter YouTube video URL here.</string>
                </property>
-             </widget>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="btnOK">
@@ -512,9 +512,9 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>110</y>
-          <width>651</width>
-          <height>261</height>
+          <y>100</y>
+          <width>661</width>
+          <height>241</height>
          </rect>
         </property>
        </widget>
@@ -522,13 +522,42 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>70</y>
+          <y>360</y>
           <width>261</width>
           <height>16</height>
          </rect>
         </property>
         <property name="text">
          <string>&lt;Playlist Progress&gt;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnPlaylistDownload">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>350</y>
+          <width>101</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Download Selected</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBoxPlaylistSelectAll">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>70</y>
+          <width>70</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select All</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>

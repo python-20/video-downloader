@@ -6,7 +6,7 @@ from PyQt5 import QtGui, QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread
 
 
 from core import YouTubeVideo, YouTubePlaylist
@@ -20,6 +20,9 @@ class Ui(QtWidgets.QMainWindow):
         self.appName = APP_NAME
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
+
+        # create a thread
+        # self.thread = Worker()
 
         # set window icon
         self.setWindowIcon(QtGui.QIcon(
@@ -37,6 +40,9 @@ class Ui(QtWidgets.QMainWindow):
 
         # connect buttons and functions - youtube playlist
         self.btnOK_playlist.clicked.connect(self.enterPlaylistURL)
+        self.btnPlaylistDownload.clicked.connect(self.playlistDownloadSelected)
+        self.checkBoxPlaylistSelectAll.stateChanged.connect(
+            self.playlistSelectAllChanged)
 
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
@@ -45,7 +51,7 @@ class Ui(QtWidgets.QMainWindow):
 
         # test URL
         self.lineEditPlaylistURL.setText(
-            "https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p")
+            "https://www.youtube.com/playlist?list=PLE-H3cfY2nKOgX-bjk_5ObFYtgHw9BI8j")
 
         shortcut = QShortcut(QKeySequence("Ctrl+Shift+U"), self.lineEditURL)
         shortcut.activated.connect(
@@ -198,10 +204,7 @@ class Ui(QtWidgets.QMainWindow):
         self.playlist_video_objects = []
         n = 1
         for video_url in self.youtube_pl.get_playlist_urls:
-            # doesn't work
-            # for n, video in self.youtube_pl.gen_youtube_playlist_videos():
-            # self.labelPlayListProgress.setText(
-            #    f"{n}/{self.youtube_pl.playlist_length}")
+
             video_stream_object = YouTubeVideo(video_url)
             self.playlist_video_objects.append(video_stream_object)
 
@@ -211,12 +214,33 @@ class Ui(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.listWidgetPlaylistVideos.addItem(item)
 
+            # TODO: remove print() to show on gui, currently printing in console.
             self.labelPlayListProgress.setText(print(
                 f"{n}/{self.youtube_pl.playlist_length}"))
             n = n + 1
 
-        # self.listWidgetPlaylistVideos.addItems(
-        #    self.youtube_pl.get_youtube_playlist_videos())
+    def playlistDownloadSelected(self):
+        """ Execute when Download Selected button is pressed in the youtube playlist tab.
+        Downloads all selected videos to the default directory
+        """
+        print("==== Starting download ===")
+        for index in range(self.listWidgetPlaylistVideos.count()):
+            if self.listWidgetPlaylistVideos.item(index).checkState() == Qt.Checked:
+                self.playlist_video_objects[index].download()
+        print("==== Download completed ====")
+
+    def playlistSelectAllChanged(self):
+        """ Execute when Select All button is pressed in the youtube playlist tab.
+        Selects and Deselects all the videos in the list widget
+        """
+        if self.checkBoxPlaylistSelectAll.isChecked():
+            for index in range(self.listWidgetPlaylistVideos.count()):
+                self.listWidgetPlaylistVideos.item(
+                    index).setCheckState(QtCore.Qt.Checked)
+        else:
+            for index in range(self.listWidgetPlaylistVideos.count()):
+                self.listWidgetPlaylistVideos.item(
+                    index).setCheckState(QtCore.Qt.Unchecked)
 
 
 app = QtWidgets.QApplication(sys.argv)
