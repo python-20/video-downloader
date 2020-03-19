@@ -1,7 +1,7 @@
 import pytube
 import os
 
-from pytube import YouTube
+from pytube import YouTube, Playlist
 from pytube.exceptions import RegexMatchError, VideoUnavailable
 
 from helpers import DEFAULT_DIRECTORY, logger
@@ -209,3 +209,57 @@ class YouTubeVideo(Video):
                 # get absolute path
                 os.path.abspath(location)
                 """
+
+
+class YouTubePlaylist():
+    def __init__(self, url):
+        """ Construct the YouTube playlist object.
+
+        args:
+            url: The URL of a YouTube playlist            
+
+        """
+        self.error = False
+        try:
+            self.playlist = Playlist(url)
+            self.playlist_urls = [video for video in self.playlist]
+            self.playlist_length = len(self.playlist_urls)
+            # self.playlist_video_objects = self.gen_youtube_playlist_videos()
+        except Exception as errorMessage:
+            self.error = True
+            # Catches any other unexpected error
+            exceptionName = errorMessage.__class__.__name__
+            self.logger.error(f"General Error Caught: {exceptionName}")
+            self.logger.error(f"{errorMessage}")
+            self.error = f"{exceptionName}:\n{errorMessage}"
+
+    @property
+    def playlist_size(self):
+        """ Returns number of videos in the playlist
+
+        args:
+            None            
+
+        """
+        return self.playlist_length
+
+    @property
+    def get_playlist_urls(self):
+        """ Returns list of video urls in the playlist
+
+        args:
+            None            
+
+        """
+        return self.playlist_urls
+
+
+'''
+    def gen_youtube_playlist_videos(self):
+        # return YouTube objects
+        n = 1
+        for url in self.playlist_urls:
+            yield YouTubeVideo(url)
+            print(f"{n}/{self.playlist_length}")
+            n = n + 1
+'''
