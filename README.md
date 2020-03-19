@@ -31,6 +31,7 @@ pip install pytube3
 * [**Cheryl M / cherylli**](https://github.com/cherylli) - *Project Lead #1*
 * [**Jon M / chonix**](https://github.com/chonix) - *Co-Project Lead #1*
 * [**Ryan Samman**](https://github.com/RyanSamman) - *Expert beginner*
+* [**Alexandre Horta**](https://github.com/AlexPHorta) - *Code and snacks*
 
 Please feel free to contact us if you would like to contribute. We also have a discord server for various projects including this.
 
