@@ -5,11 +5,11 @@ import urllib
 from PyQt5 import QtGui, QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
-
 from PyQt5.QtCore import Qt, QThread
 
 
 from core import YouTubeVideo, YouTubePlaylist
+from checker import checkUrl, updateTldList
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
@@ -44,6 +44,9 @@ class Ui(QtWidgets.QMainWindow):
         self.checkBoxPlaylistSelectAll.stateChanged.connect(
             self.playlistSelectAllChanged)
 
+        # update the TLD list (for the URL checker)
+        updateTldList()
+        
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
         self.checkBoxVideo.setChecked(True)
@@ -71,11 +74,16 @@ class Ui(QtWidgets.QMainWindow):
         """
 
         link = self.lineEditURL.text()
-        self.ytube = YouTubeVideo(
-            link, progress_callback=self.download_progress)
-        if self.ytube.error:
-            self.showPopUp(self.ytube.error)
+
+        if not checkUrl(link):
+            self.showPopUp('Invalid URL')
             return
+        else:
+            self.ytube = YouTubeVideo(
+                link, progress_callback=self.download_progress)
+            if self.ytube.error:
+                self.showPopUp(self.ytube.error)
+                return
 
         # Display video title
         self.labelVideoTitle.setText(self.ytube.videoTitle)

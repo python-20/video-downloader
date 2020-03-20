@@ -1,4 +1,5 @@
 PyQt5==5.14.1
 PyQt5-sip==12.7.1
 pytube3==9.6.4
+tld==0.11.10
 typing-extensions==3.7.4.1

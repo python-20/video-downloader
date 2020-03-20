@@ -1,6 +1,7 @@
 import unittest
+import urllib.parse as parse
 
-from .context import core
+from .context import core, checker
 
 # Run tests with python -m unittest tests/test_basic.py
 
@@ -10,6 +11,62 @@ from .context import core
 videoBaseMethods = frozenset(['allVideoStreams', 'download', 'videoId',
     'videoThumbnail', 'videoTitle'])
 videoBaseAttributes = frozenset(['url', 'progress_callback'])
+
+
+class TestChecker(unittest.TestCase):
+    """Tests for the URL checker."""
+
+    def setUp(self):
+        self.urls = [
+            '',
+            '0',
+            'x',
+            'a.b',
+            'A.com',
+            'https://A.com',
+            'www.youtuba.com/watch?v=d-o3eB9sfls',
+            'www.youtube.com/match?v=d-o3eB9sfls',
+            'https://www.youtube.com/watch?v=d-o3eB9sfls',
+            'https://www.youtube.com.br/watch?v=d-o3eB9sfls',
+            'www.youtube.com/watch?v=d-o3eB9sfls',
+            'youtube.com/watch?v=d-o3eB9sfls',
+        ]
+
+    def testPatchUrl(self):
+        """Test if https:// is added to the beginning of URLs that aren't
+           provided with a scheme.
+        """
+        fixedUrls = ['https://' + url if not (url.startswith('http://') or
+                    url.startswith('https://')) else url
+                    for url in self.urls]
+        for index, url in enumerate(fixedUrls):
+            self.assertEqual(url, checker.patchUrl(self.urls[index]))
+
+    def testGetDomain(self):
+        """Test if it's possible to grab a valid domain from the URL."""
+        domains = [False, False, False, False, 'a', 'a', 'youtuba', 'youtube',
+                  'youtube', 'youtube', 'youtube', 'youtube']
+        for index, url in enumerate(self.urls):
+            url_ = parse.urlparse(checker.patchUrl(url))
+            self.assertEqual(domains[index], checker.getDomain(url_),
+                            f"Tested url: {url}")
+
+    def testCheckService(self):
+        """Test if the URL is from one of the registered services."""
+        service = [False, False, False, False, False, False, False,
+                  True, True, True, True, True]
+        for index, url in enumerate(self.urls):
+            url_ = parse.urlparse(checker.patchUrl(url))
+            self.assertEqual(service[index], checker.checkService(url_),
+                            f"Tested url: {url}")
+
+    def testCheckUrl(self):
+        """Test if the URL is valid."""
+        checkedUrls = [False, False, False, False, False, False, False,
+                      False, True, True, True, True]
+        for index, url in enumerate(self.urls):
+            self.assertEqual(checkedUrls[index], checker.checkUrl(url),
+                            f"Tested url: {url}")
 
 
 class TestVideo(unittest.TestCase):
