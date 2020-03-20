@@ -1,13 +1,14 @@
 import sys
 import os
 import urllib
-from PyQt5 import QtGui, QtWidgets, uic
+
+from PyQt5 import QtGui, QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
-from PyQt5.QtCore import Qt
-from pytube import YouTube
+from PyQt5.QtCore import Qt, QThread
 
-from core import YouTubeVideo
+
+from core import YouTubeVideo, YouTubePlaylist
 from checker import checkUrl, updateTldList
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
@@ -20,11 +21,14 @@ class Ui(QtWidgets.QMainWindow):
         appPath = (os.path.dirname(os.path.realpath(__file__)))
         uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
+        # create a thread
+        # self.thread = Worker()
+
         # set window icon
         self.setWindowIcon(QtGui.QIcon(
             f'{appPath}/ui/img/title-bar-icon.png'))
 
-        # connect buttons and functions
+        # connect buttons and functions - youtube single video
         self.btnOK.clicked.connect(self.enterURL)
         self.lineEditURL.returnPressed.connect(self.enterURL)
         self.btnDownload.clicked.connect(self.download_button)
@@ -34,15 +38,24 @@ class Ui(QtWidgets.QMainWindow):
         self.checkBoxVideo.stateChanged.connect(self.populateComboBox)
         self.checkBoxAudio.stateChanged.connect(self.populateComboBox)
 
+        # connect buttons and functions - youtube playlist
+        self.btnOK_playlist.clicked.connect(self.enterPlaylistURL)
+        self.btnPlaylistDownload.clicked.connect(self.playlistDownloadSelected)
+        self.checkBoxPlaylistSelectAll.stateChanged.connect(
+            self.playlistSelectAllChanged)
+
         # update the TLD list (for the URL checker)
         updateTldList()
-
+        
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
         self.checkBoxVideo.setChecked(True)
         self.btnDownload.setEnabled(False)
 
         # test URL
+        self.lineEditPlaylistURL.setText(
+            "https://www.youtube.com/playlist?list=PLE-H3cfY2nKOgX-bjk_5ObFYtgHw9BI8j")
+
         shortcut = QShortcut(QKeySequence("Ctrl+Shift+U"), self.lineEditURL)
         shortcut.activated.connect(
             lambda: self.lineEditURL.setText(DEFAULT_URL))
@@ -52,6 +65,8 @@ class Ui(QtWidgets.QMainWindow):
         self.user_directory = DEFAULT_DIRECTORY
 
         self.show()
+
+    ########## youtube single video tab ###################
 
     def enterURL(self):
         """ When OK button is pressed.
@@ -183,6 +198,57 @@ class Ui(QtWidgets.QMainWindow):
         file_size = stream.filesize
         self.progressBar.setValue(
             round((1 - bytes_remaining / file_size) * 100, 3))
+
+    ########## youtube playlist tab ###################
+
+    def enterPlaylistURL(self):
+        """ Execute when OK button is pressed in the youtube playlist tab.
+        Use the given URL to retrieve video information and process it
+        """
+        self.youtube_pl = YouTubePlaylist(self.lineEditPlaylistURL.text())
+        if self.youtube_pl.error:
+            self.showPopUp(self.youtube_pl.error)
+            return
+        self.playlist_video_objects = []
+        n = 1
+        for video_url in self.youtube_pl.get_playlist_urls:
+
+            video_stream_object = YouTubeVideo(video_url)
+            self.playlist_video_objects.append(video_stream_object)
+
+            item = QtWidgets.QListWidgetItem()
+            item.setText(video_stream_object.videoTitle)
+            item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
+            item.setCheckState(QtCore.Qt.Checked)
+            self.listWidgetPlaylistVideos.addItem(item)
+
+            # TODO: remove print() to show on gui, currently printing in console.
+            self.labelPlayListProgress.setText(print(
+                f"{n}/{self.youtube_pl.playlist_length}"))
+            n = n + 1
+
+    def playlistDownloadSelected(self):
+        """ Execute when Download Selected button is pressed in the youtube playlist tab.
+        Downloads all selected videos to the default directory
+        """
+        print("==== Starting download ===")
+        for index in range(self.listWidgetPlaylistVideos.count()):
+            if self.listWidgetPlaylistVideos.item(index).checkState() == Qt.Checked:
+                self.playlist_video_objects[index].download()
+        print("==== Download completed ====")
+
+    def playlistSelectAllChanged(self):
+        """ Execute when Select All button is pressed in the youtube playlist tab.
+        Selects and Deselects all the videos in the list widget
+        """
+        if self.checkBoxPlaylistSelectAll.isChecked():
+            for index in range(self.listWidgetPlaylistVideos.count()):
+                self.listWidgetPlaylistVideos.item(
+                    index).setCheckState(QtCore.Qt.Checked)
+        else:
+            for index in range(self.listWidgetPlaylistVideos.count()):
+                self.listWidgetPlaylistVideos.item(
+                    index).setCheckState(QtCore.Qt.Unchecked)
 
 
 app = QtWidgets.QApplication(sys.argv)
