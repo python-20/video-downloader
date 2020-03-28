@@ -13,21 +13,22 @@ from core import YouTubeVideo, YouTubePlaylist
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
+# class VideoThread(QThread):
+
+#    def run(self):
+#        pass
+
+
 class Ui(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Ui, self).__init__()
-        self.appName = APP_NAME
-        appPath = (os.path.dirname(os.path.realpath(__file__)))
-        uic.loadUi(f'{appPath}/ui/qt.ui', self)
 
-        # create a thread
-        # self.thread = Worker()
+        self._initializeAndSetup()
+        self._connectSignals()
+        self.show()
 
-        # set window icon
-        self.setWindowIcon(QtGui.QIcon(
-            f'{appPath}/ui/img/title-bar-icon.png'))
-
+    def _connectSignals(self):
         # connect buttons and functions - youtube single video
         self.btnOK.clicked.connect(self.enterURL)
         self.lineEditURL.returnPressed.connect(self.enterURL)
@@ -43,6 +44,18 @@ class Ui(QtWidgets.QMainWindow):
         self.btnPlaylistDownload.clicked.connect(self.playlistDownloadSelected)
         self.checkBoxPlaylistSelectAll.stateChanged.connect(
             self.playlistSelectAllChanged)
+
+    def _initializeAndSetup(self):
+        # define paths
+        self.appName = APP_NAME
+        self.appPath = (os.path.dirname(os.path.realpath(__file__)))
+
+        # load ui file
+        uic.loadUi(f'{self.appPath}/ui/qt.ui', self)
+
+        # set window icon
+        self.setWindowIcon(QtGui.QIcon(
+            f'{self.appPath}/ui/img/title-bar-icon.png'))
 
         # initialize controls
         self.progressBar.setValue(0)  # progress bar value to 0
@@ -60,8 +73,6 @@ class Ui(QtWidgets.QMainWindow):
 
         # user directory (chosen for the download)
         self.user_directory = DEFAULT_DIRECTORY
-
-        self.show()
 
     ########## youtube single video tab ###################
 
