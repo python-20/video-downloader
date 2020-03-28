@@ -13,10 +13,22 @@ from core import YouTubeVideo, YouTubePlaylist
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
-# class VideoThread(QThread):
+class VideoThread(QThread):
 
-#    def run(self):
-#        pass
+    signalStatus = QtCore.pyqtSignal(str)
+
+    def __init__(self, url):
+        QThread.__init__(self)
+        print("Thread Initialized")
+        self.url = url
+
+    def run(self):
+        print("Thread Started")
+        self.getVideoObject()
+        self.signalStatus.emit('Idle')
+
+    def getVideoObject(self):
+        return YouTubeVideo(self.url)
 
 
 class Ui(QtWidgets.QMainWindow):
@@ -208,6 +220,9 @@ class Ui(QtWidgets.QMainWindow):
         """ Execute when OK button is pressed in the youtube playlist tab.
         Use the given URL to retrieve video information and process it
         """
+        # first clear what is in the listwidget
+        self.listWidgetPlaylistVideos.clear()
+
         self.youtube_pl = YouTubePlaylist(self.lineEditPlaylistURL.text())
         if self.youtube_pl.error:
             self.showPopUp(self.youtube_pl.error)
@@ -216,7 +231,12 @@ class Ui(QtWidgets.QMainWindow):
         n = 1
         for video_url in self.youtube_pl.get_playlist_urls:
 
-            video_stream_object = YouTubeVideo(video_url)
+            self.worker = VideoThread(video_url)
+            # self.worker = QtCore.QThread(parent=self)
+            # self.worker.moveToThread(self.worker_thread)
+            self.worker.start()
+
+            video_stream_object = self.worker.getVideoObject()
             self.playlist_video_objects.append(video_stream_object)
 
             item = QtWidgets.QListWidgetItem()
@@ -225,7 +245,9 @@ class Ui(QtWidgets.QMainWindow):
             item.setCheckState(QtCore.Qt.Checked)
             self.listWidgetPlaylistVideos.addItem(item)
 
-            # TODO: remove print() to show on gui, currently printing in console.
+            self.labelPlayListProgress.setText(
+                f"{n}/{self.youtube_pl.playlist_length}")
+
             self.labelPlayListProgress.setText(print(
                 f"{n}/{self.youtube_pl.playlist_length}"))
             n = n + 1
