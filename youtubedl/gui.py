@@ -6,26 +6,26 @@ from PyQt5 import QtGui, QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
 
-from PyQt5.QtCore import Qt, QThread
+from PyQt5.QtCore import Qt, QThread, QRunnable, QThreadPool
 
 
 from core import YouTubeVideo, YouTubePlaylist
 from helpers import APP_NAME, DEFAULT_DIRECTORY, DEFAULT_URL, logger
 
 
-class VideoThread(QThread):
+class VideoThread(QRunnable):
 
     signalStatus = QtCore.pyqtSignal(str)
 
     def __init__(self, url):
-        QThread.__init__(self)
+        super(VideoThread, self).__init__()
         print("Thread Initialized")
         self.url = url
 
     def run(self):
         print("Thread Started")
         self.getVideoObject()
-        self.signalStatus.emit('Idle')
+        #self.signalStatus.emit('Idle')
 
     def getVideoObject(self):
         return YouTubeVideo(self.url)
@@ -39,6 +39,9 @@ class Ui(QtWidgets.QMainWindow):
         self._initializeAndSetup()
         self._connectSignals()
         self.show()
+
+        self.threadpool = QThreadPool()
+        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
     def _connectSignals(self):
         # connect buttons and functions - youtube single video
@@ -234,7 +237,9 @@ class Ui(QtWidgets.QMainWindow):
             self.worker = VideoThread(video_url)
             # self.worker = QtCore.QThread(parent=self)
             # self.worker.moveToThread(self.worker_thread)
-            self.worker.start()
+            # self.worker.start()
+            
+            self.threadpool.start(self.worker)
 
             video_stream_object = self.worker.getVideoObject()
             self.playlist_video_objects.append(video_stream_object)
